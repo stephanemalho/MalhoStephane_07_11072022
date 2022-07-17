@@ -35,5 +35,6 @@ router.put("/", auth, [
 validationResultExpress,controlPassword, userCtrl.updateUser); // update a user account
 router.post("/:id/report", auth, userCtrl.reportUser); // report the user
 router.get("/export-data", auth, userCtrl.exportData); // export the user')
+router.post("/bio", auth, userCtrl.updateBio); // update the user bio")
 
 module.exports = router;

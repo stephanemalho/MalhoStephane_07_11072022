@@ -44,6 +44,12 @@ const userSchema = mongoose.Schema(
       maxlength: 20,
       trim: true,
     },
+    bio: {
+      type: String,
+      minlength: 2,
+      maxlength: 255,
+      trim: true,
+    },
     age: { type: Number, min:16 , max: 68 },
     avatar: {
       type: String,

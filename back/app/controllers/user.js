@@ -42,11 +42,13 @@ exports.signup = (req, res, next) => {
       const firstName = req.body.firstname; // get the firstname
       const lastName = req.body.lastname; // get the lastname
       const pseudo = req.body.pseudo; // get the pseudo
+      const bio = req.body.bio; // get the bio
       const user = new User({
         // create a new user
         email: emailEncrypted,
         password: hash,
         pseudo: pseudo,
+        bio: bio,
         firstname: firstName,
         lastname: lastName,
         hateoasLinks: hateoasLinks(req),
@@ -188,6 +190,22 @@ exports.readAllUsers = (req, res, next) => {
     })
     .catch((error) => res.status(400).json({ error })); // bad request
 };
+
+exports.updateBio = (req, res, next) => {
+  User.findByIdAndUpdate(
+    { _id: req.auth.userID },
+    { bio: req.body.bio },
+    { new: true }
+  )
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("User not found"); // not found
+      }
+      res.status(200).json(user, hateoasLinks(req, user._id)); // OK
+    })
+    .catch((error) => res.status(500).json({ error })); // Internal Server Error
+}
+
 
 /*****************************************************************
  *****************  UPDATE THE USER SETUP    *********************

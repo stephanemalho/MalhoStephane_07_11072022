@@ -1,38 +1,24 @@
 ## MalhoStephane_6_25032022
 
-# 🇫🇷 Construisez une API sécurisée pour une application d'avis gastronomiques 
-# 🇬🇧 Build a secure API for a food reviews application 
+# 🇫🇷 Créez un réseau social d’entreprise
+# 🇬🇧 Create a social network of companies
 
->## 🖥 Front-end configuration (Angular) 
->
->>### How to install the front-end ?
->
->You can look the *[READ-ME.md](https://github.com/OpenClassrooms-Student-Center/Web-Developer-P6#readme)* file for more informations.
-
-### Clone this repository
-
-```bash
-git clone https://github.com/OpenClassrooms-Student-Center/Web-Developer-P6.git
-```
-
-### Then run 
-```bash
-  npm install
+>## 🖥 Front-end configuration (React) 
 ```
 >### How to run the front-end
 
 ```bash
+  cd front/client
   npm start
 ```
 
 >## 📡 Configuration API (back-end)
 >>### How to install the back-end ?
->You can look the *[READ-ME.md](https://github.com/stephanemalho/MalhoStephane_6_25032022/blob/main/README.md)* file for more informations.<br>You already there but you can clic for fun 😆
 >
 ### Clone this repository
 
 ```bash
-git clone https://github.com/stephanemalho/MalhoStephane_6_25032022.git
+git clone https://github.com/stephanemalho/MalhoStephane_7_11072022.git
 ```
 ### Duplicate .env.example to .env and fill required value. Then run :
 
