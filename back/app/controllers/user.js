@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const CryptoJS = require("crypto-js");
 const { generateToken } = require("../utils/tokenManager");
+const fs = require("fs");
 
 /*****************************************************************
  *****************  ENCRYPT THE USER EMAIL   *********************
@@ -48,6 +49,9 @@ exports.signup = (req, res, next) => {
         email: emailEncrypted,
         password: hash,
         pseudo: pseudo,
+        avatar: req.file
+          ? `images/avatar/${req.file.filename}`
+          : "default-upload/avatar.png",
         bio: bio,
         firstname: firstName,
         lastname: lastName,
@@ -73,9 +77,7 @@ exports.signup = (req, res, next) => {
  *****************************************************************/
 exports.login = (req, res, next) => {
   const emailEncrypted = encryptString(req.body.email);
-  User.findOne(
-    { email: emailEncrypted },
-  )
+  User.findOne({ email: emailEncrypted })
     .then((user) => {
       if (!user) {
         return res.status(404).json({ error: "Utilisateur non trouvé" }); // Not found
@@ -119,16 +121,18 @@ exports.logout = (req, res, next) => {
  *****************     DELETE THE USER       *********************
  *****************************************************************/
 exports.deleteUser = (req, res, next) => {
-  User.findOneAndDelete({ _id: req.auth.userID }) // find the user and delete it
+  User.findOne({ _id: req.auth.userID }) // find the sauce
     .then((user) => {
       if (!user) {
-        res.status(404).send("User not found"); // not found
+        return res.status(403).json({ error: "You can't delete this sauce" }); // forbidden
       }
-      res.status(204).json({ message: "User deleted" }); // no content
+      fs.unlink(user.avatar, () => {
+        User.deleteOne({ _id: req.auth.userID }) // delete the user
+          .then(() => res.status(204).send()) // no content
+          .catch((error) => res.status(400).json({ error })); // bad request
+      });
     })
-    .catch(
-      (error) => res.status(500).json({ error }) // Internal Server Error
-    );
+    .catch((error) => res.status(400).json({ error })); // bad request
 };
 
 /*****************************************************************
@@ -204,8 +208,7 @@ exports.updateBio = (req, res, next) => {
       res.status(200).json(user, hateoasLinks(req, user._id)); // OK
     })
     .catch((error) => res.status(500).json({ error })); // Internal Server Error
-}
-
+};
 
 /*****************************************************************
  *****************  UPDATE THE USER SETUP    *********************
@@ -219,8 +222,11 @@ exports.updateUser = async (req, res) => {
   if (req.body.email) {
     update.email = encryptString(req.body.email);
   }
-  if (req.body.pseudo) {
-    update.pseudo = req.body.pseudo;
+  if (req.body.bio) {
+    update.bio = req.body.bio;
+  }
+  if (req.file) {
+    update.avatar = `images/avatar/${req.file.filename}`;
   }
   if (req.body.firstname) {
     update.firstname = req.body.firstname;
@@ -228,21 +234,34 @@ exports.updateUser = async (req, res) => {
   if (req.body.lastname) {
     update.lastname = req.body.lastname;
   }
-  User.findOneAndUpdate({ _id: req.auth.userID }, update, {
-    // update the changes for the user
-    returnOriginal: true,
-    updatedExisting: true,
-    runValidators: true,
-    context: "query",
-  })
+  User.findOne({ _id: req.auth.userID })
     .then((user) => {
       if (!user) {
-        return res
-          .status(404) // not found
-          .json({ error: "User not found." });
+        return res.status(403).json({ error: "You can't update this account" }); // forbidden
       }
-      user.email = decryptString(user.email);
-      res.status(201).json(user, hateoasLinks(req, user._id));
+      try {
+        if (user.avatar !== "default-upload/avatar.png") {
+          fs.unlinkSync(user.avatar); // delete the old image synchronously
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      User.findOneAndUpdate({ _id: req.auth.userID }, update, {
+        // update the changes for the user
+        returnOriginal: true,
+        updatedExisting: true,
+      })
+        .then((user) => {
+          if (!user) {
+            return res
+              .status(404) // not found
+              .json({ error: "User not found." });
+          }
+          user.email = decryptString(user.email);
+          res.status(200).json(user, hateoasLinks(req, user._id));
+        })
+        .catch((error) => res.status(400).json({ error })); // Bad Request
     })
     .catch((error) => res.status(500).json({ error })); // Internal Server Error
 };

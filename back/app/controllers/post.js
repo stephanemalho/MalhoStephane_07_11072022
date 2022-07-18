@@ -31,13 +31,13 @@ exports.readAllPosts = (req, res, next) => {
 };
 
 /*****************************************************************
- *****************  CREATE ONE POST         *********************
+ *****************  CREATE ONE POST         **********************
  *****************************************************************/
 exports.createPost = (req, res, next) => {
   const post = new Post({
     userId: req.auth.userID,
     message : req.body.message,
-    imageUrl: req.file ? `images/${req.file.filename}` : null,
+    imageUrl: req.file ? `images/image-url/${req.file.filename}` : null,
     likes : 0,
     dislikes : 0,
     usersLikeId : [],
@@ -51,21 +51,23 @@ exports.createPost = (req, res, next) => {
 };
 
 /*****************************************************************
- *****************  UPDATE ELEMENT IN POST    ******************
+ *****************  UPDATE ELEMENT IN POST       *****************
  *****************************************************************/
 exports.updatePost = (req, res, next) => {
   const postObject = req.file
     ? {
-        ...JSON.parse(req.body.post),
-        imageUrl: `images/${req.file.filename}`,
+        imageUrl: `images/image-url/${req.file.filename}`,
       }
-    : { ...req.body }; // if there is a file, add the image url to the post object
+    : { ...req.body }; // if there is a file, add the image url to the sauce object
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       if (post.userId !== req.auth.userID) {
         return res.status(403).json({ error: "You can't update this post" }); // forbidden
       }
       try {
+        if (req.body.message) {
+          postObject.message = req.body.message;
+        }
         if (postObject.imageUrl) {
           fs.unlinkSync(post.imageUrl); // delete the old image synchronously
         }
@@ -79,7 +81,8 @@ exports.updatePost = (req, res, next) => {
         .catch((error) => res.status(400).json({ error })); // bad request
     })
     .catch((error) => res.status(404).json({ error })); // not found
-};
+}
+
 
 
 /*****************************************************************
@@ -91,11 +94,11 @@ exports.deletePost = (req, res, next) => {
       if (post.userId !== req.auth.userID) {
         return res.status(403).json({ error: "You can't delete this post" }); // forbidden
       }
-      //fs.unlink(post.imageUrl, () => {
+      fs.unlink(post.imageUrl, () => {
         Post.deleteOne({ _id: req.params.id })
           .then(() => res.status(204).send()) // no content
           .catch((error) => res.status(400).json({ error })); // bad request
-      //});
+        });
     })
     .catch((error) => res.status(400).json({ error })); // bad request
 };
