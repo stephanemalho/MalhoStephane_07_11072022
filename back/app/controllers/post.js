@@ -1,5 +1,8 @@
 const Post = require("../models/post"); // import the post model
 const fs = require("fs"); // file system
+const jwt = require("jsonwebtoken");
+
+
 
 
 /*****************************************************************
@@ -62,7 +65,11 @@ exports.updatePost = (req, res, next) => {
     : { ...req.body }; // if there is a file, add the image url to the sauce object
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      if (post.userId !== req.auth.userID) {
+      const token = req.headers?.authorization.split(" ")[1];
+      const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
+      const userId = decodedToken.userId;
+      const isAdmin = decodedToken.isAdmin;
+      if (post.userId !== userId && !isAdmin) {
         return res.status(403).json({ error: "You can't update this post" }); // forbidden
       }
       try {
@@ -92,7 +99,11 @@ exports.updatePost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }) // find the post
     .then((post) => {
-      if (post.userId !== req.auth.userID) {
+      const token = req.headers?.authorization.split(" ")[1];
+      const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
+      const userId = decodedToken.userId;
+      const isAdmin = decodedToken.isAdmin;
+      if (post.userId !== userId && !isAdmin) {
         return res.status(403).json({ error: "You can't delete this post" }); // forbidden
       }
       fs.unlink(post.imageUrl, () => {

@@ -90,7 +90,7 @@ exports.login = (req, res, next) => {
             return res.status(401).json({ error: "Mot de passe incorrect !" }); // Unauthorized
           }
           user.email = encryptString(user.email);
-          const { token, expiresIn } = generateToken(user._id); // generate the token
+          const { token, expiresIn } = generateToken(user._id, user.isAdmin); // generate the token
           res.status(200).json({
             // OK
             userId: user._id,
