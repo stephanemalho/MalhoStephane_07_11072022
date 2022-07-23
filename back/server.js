@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 // allow cors
 var corsOptions = {
-  origin: "http://localhost:4200",
+  origin: "http://localhost:3000",
 };
 app.use(cors(corsOptions));
 
@@ -68,9 +68,9 @@ app.get("/", (req, res) => {
 });
 
 // listen on port 3000
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(colors.blue(`Server is running on port ${PORT}. 🔥🔥🔥 http://localhost:3000`));
+  console.log(colors.blue(`Server is running on port ${PORT}. 🔥🔥🔥 http://localhost:4000`));
 });
 
 // if error, send 404 status
