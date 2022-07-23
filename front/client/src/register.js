@@ -77,7 +77,7 @@ const Register = () => {
     const V2 = EMAIL_REGEX.test(email);
     const V3 = PWD_REGEX.test(pwd);
     if (!V1 || !V2 || !V3) {
-      setErrMsg("Invalid Entry");
+      setErrMsg("Information invalide");
       return;
     }
     try {
@@ -95,10 +95,8 @@ const Register = () => {
       if (!err?.response) {
         setErrMsg("Erreur de serveur");
       } else if  (err.response.data.error.email || err.response.data.error.errors.email) {
-        console.log(err.response);
-        setErrMsg("Émail: Éxiste déja");
+        setErrMsg("Courriel: Éxiste déja");
       } else if  (err.response.data.error.pseudo || err.response.data.error.errors.pseudo) {
-        console.log(err.response);
         setErrMsg("Pseudo: Éxiste déja");
       }else {
         setErrMsg("Erreur d'enregistrement");
@@ -171,7 +169,7 @@ const Register = () => {
             </p>
             {/* INPUT TO CHECK THE EMAIL FORMAT */}
             <label htmlFor="email">
-              Email:
+              Courriel:
               <span className={validEmail ? "valid" : "hide"}>
                 <FontAwesomeIcon icon={faCheck} />
               </span>

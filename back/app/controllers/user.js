@@ -4,6 +4,7 @@ const CryptoJS = require("crypto-js");
 const { generateToken } = require("../utils/tokenManager");
 const fs = require("fs");
 
+
 /*****************************************************************
  *****************  ENCRYPT THE USER EMAIL   *********************
  *****************************************************************/
@@ -234,7 +235,7 @@ exports.updateUser = async (req, res) => {
   if (req.body.lastname) {
     update.lastname = req.body.lastname;
   }
-  User.findOne({ _id: req.auth.userID })
+  User.findOne({ _id: req.auth.userID }) 
     .then((user) => {
       if (!user) {
         return res.status(403).json({ error: "You can't update this account" }); // forbidden
@@ -270,7 +271,7 @@ exports.updateUser = async (req, res) => {
  *****************  EXPORT THE USER DATA     *********************
  *****************************************************************/
 exports.exportData = (req, res) => {
-  User.findOne({ _id: req.auth.userID })
+  User.findOne({ _id: req.auth.userID})
     .then((user) => {
       // If user not found, return an error
       if (!user) {

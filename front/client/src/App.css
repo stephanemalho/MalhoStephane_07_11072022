@@ -80,9 +80,9 @@ form button:hover {
   transition: ease-in-out 1s;
 }
 .errmsg {
-  color: #FFD7D7;
+  color: #FD2D01;
   padding: 0.2em;
-  background-color: black;
+  background-color: #FFD7D7;
   font-size: 1.5em;
   margin-left: 0.5em;
   transition: ease-in-out 1s;
