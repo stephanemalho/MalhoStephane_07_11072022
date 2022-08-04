@@ -1,0 +1,123 @@
+body {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+section {
+  margin: 100px auto;
+  max-width: 600px;
+  padding: 2em;
+  background-color: white;
+  border-radius: 1em;
+}
+.display-title-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+h1 {
+  font-size: 1.5em;
+  padding-top: 60px;
+}
+.App-logo {
+  width: 195px;
+}
+@media screen and (max-width: 400px) {
+  .App-logo {
+    display: none;
+  }
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  width: 100%;
+}
+label {
+  font-size: 1em;
+  margin: 0.5em 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 0.1em solid #ffd7d7;
+}
+form input {
+  padding: 0.3em;
+  border: none;
+  border-radius: 0.5em;
+  font-size: 1.2em;
+}
+
+form button {
+  padding: 1em;
+  margin-top: 1em;
+  border: 1px solid black;
+  border-radius: 0.5em;
+  font-size: 1.2em;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  transition: ease-in-out 0.5s;
+}
+form button:hover {
+  border: 1px solid #FD2D01;
+  background-color: #FD2D01;
+  color: white;
+}
+.offscreen,
+.hide {
+  display: none;
+  transition: ease-in-out 1s;
+}
+.valid {
+  color: green;
+  font-size: 1.5em;
+  margin-left: 0.5em;
+  transition: ease-in-out 1s;
+}
+.invalid {
+  color: red;
+  font-size: 1.5em;
+  margin-left: 0.5em;
+  transition: ease-in-out 1s;
+}
+.errmsg {
+  color: #FD2D01;
+  padding: 0.2em;
+  background-color: #FFD7D7;
+  font-size: 1.5em;
+  margin-left: 0.5em;
+  transition: ease-in-out 1s;
+}
+.instructions {
+  width: 95%;
+  font-size: 1em;
+  margin-left: 1em;
+  padding: 0.5em;
+  background-color: black;
+  border-radius: 0.3em;
+  color: white;
+  transition: ease-in-out 1s;
+}
+.instructions svg {
+  margin-right: 0.5em;
+}
+button:disabled {
+  background-color: rgba(244, 244, 244, 0.5);
+  color: rgba(153, 153, 153);
+  border: none;
+  transition: ease-in-out 1s;
+}
+button:disabled:hover {
+  background-color: rgba(244, 244, 244, 0.5);
+  color: rgba(153, 153, 153);
+  border: none;
+  transition: ease-in-out 1s;
+  cursor: not-allowed;
+}
+
+/* 
+
+  Primaire : #FD2D01
+  Secondaire : #FFD7D7
+  Tertiaire : #4E5166
+
+*/

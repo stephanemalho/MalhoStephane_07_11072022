@@ -1,0 +1,20 @@
+{
+  "short_name": "React App",
+  "name": "Create React App Sample",
+  "icons": [
+    {
+      "src": "icon-left-font-monochrome-black.png",
+      "sizes": "225x225",
+      "type": "logo/png"
+    },
+    {
+      "src": "web-groupomania-icon.png",
+      "type": "logo/png",
+      "sizes": "10x10"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

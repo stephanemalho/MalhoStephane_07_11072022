@@ -11,9 +11,8 @@ const userSchema = mongoose.Schema(
       unique: true,
       trim: true,
       maxlength: 64,
-      unique: true,
-      uniqueCaseInsensitive: true,
-      toLowercase: true,
+      //uniqueCaseInsensitive: true,
+      //toLowercase: true,
       uniqueValidator: {
         message: "Email already exists",
       }
@@ -44,10 +43,19 @@ const userSchema = mongoose.Schema(
       maxlength: 20,
       trim: true,
     },
-    age: { type: Number, min:16 , max: 68 },
+    bio: {
+      type: String,
+      minlength: 2,
+      maxlength: 255,
+      trim: true,
+    },
+    birthday: { 
+      type: Date,
+      default: Date.now,
+    },
     avatar: {
       type: String,
-      default: "../assets/images/avatar.png",
+      default: "../assets/images/default-avatar/avatar.png",
     },
     followers: {
       type: [String],
