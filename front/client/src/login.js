@@ -1,9 +1,11 @@
-import { useRef, useState, useEffect } from "react";
-import axios from "./api/axios";
+import { useRef, useState, useEffect, useContext } from "react";
+import AuthContext from "./context/authProvider";
 import logo from "./logo.png";
+import axios from "./api/axios";
 const LOGIN_URL = "/api/auth/login";
 
 const Login = () => {
+  const {setAuth} = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -30,20 +32,25 @@ const Login = () => {
         JSON.stringify({ email , password: pwd }),
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
-      console.log(response);
-      console.log(response.token);
-      console.log(JSON.stringify(response?.data));
-      console.log(JSON.stringify(response));
-
+      console.log(JSON.stringify(response?.data?.userId));
+      console.log(JSON.stringify(response?.data?.token));
+      const token = response?.data?.token;
+      setAuth({email, pwd, token});
       setEmail("");
       setPwd("");
       setSuccessMsg(true);
     } catch (err) {
-      if (err.response) {
-        setErrMsg(err.response.data.message);
+      console.log(err)
+      if (!err?.response) {
+        setErrMsg("Erreur de serveur");
+      } else if  (err.response?.status === 400) {
+        setErrMsg("Courriel ou Mot de passe incorecte");
+      } else if  (err.response?.status === 401) {
+        setErrMsg("Profil non autorisé");
+      }else {
+        setErrMsg("Connection impossible");
       }
       errRef.current.focus();
     }
@@ -92,8 +99,8 @@ const Login = () => {
               value={pwd}
               required
             />
+          <button>Connexion</button>
           </form>
-          <button className="loginBtn">Connexion</button>
           <p>
             Besoin d'un compte ?<br />
             <span className="line">

@@ -87,7 +87,6 @@ const Register = () => {
         password: pwd,
       });
       console.log(response);
-      console.log(response.token);
       console.log(JSON.stringify(response));
       setSuccessMsg(true);
     }
