@@ -37,7 +37,7 @@ const Register = () => {
   const [validMatchPwdFocus, setValidMatchPwdFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
-  const [sucessMsg, setSucessMsg] = useState(false);
+  const [successMsg, setSuccessMsg] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -89,7 +89,7 @@ const Register = () => {
       console.log(response);
       console.log(response.token);
       console.log(JSON.stringify(response));
-      setSucessMsg(true);
+      setSuccessMsg(true);
     }
     catch (err) {
       if (!err?.response) {
@@ -107,7 +107,7 @@ const Register = () => {
 
   return (
     <>
-      {sucessMsg ? (
+      {successMsg ? (
         <section>
           <article className="display-title-form">
             <h1>Merci de votre inscription:</h1>

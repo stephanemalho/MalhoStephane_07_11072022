@@ -46,7 +46,7 @@ form input {
   font-size: 1.2em;
 }
 
-form button {
+form button, .loginBtn {
   padding: 1em;
   margin-top: 1em;
   border: 1px solid black;

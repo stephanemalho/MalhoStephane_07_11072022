@@ -5,11 +5,11 @@
     {
       "src": "icon-left-font-monochrome-black.png",
       "sizes": "225x225",
-      "type": "image/png"
+      "type": "logo/png"
     },
     {
       "src": "web-groupomania-icon.png",
-      "type": "image/png",
+      "type": "logo/png",
       "sizes": "10x10"
     }
   ],
