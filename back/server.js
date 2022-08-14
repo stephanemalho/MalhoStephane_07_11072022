@@ -27,18 +27,19 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // * means all origins are allowed to access the server
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization, x-access-token"
   ); // allow headers
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   ); // allow methods
+  res.setHeader("Access-Control-Allow-Credentials", true); // allow credentials
   next();
 });
 
 // allow cors
 var corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", "http://localhost:4000" ]
 };
 app.use(cors(corsOptions));
 

@@ -1,12 +1,13 @@
 import { useRef, useState, useEffect } from "react";
-import logo from "./logo.png";
+import "./log.css";
+import logo from "../../img/logo.png";
 import {
   faCheck,
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "./api/axios";
+import axios from "../../api/axios";
 
 const USER_REGEX = /^[a-zA-Z\u00C0-\u017F][a-zA-Z0-9-_\u00C0-\u017F]{3,23}$/;
 const PWD_REGEX =
@@ -45,22 +46,19 @@ const Register = () => {
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
-    console.log(result);
-    console.log(email);
+    // console.log(email);
     setValidEmail(result);
   }, [email]);
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
+    // console.log(user);
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
+    // console.log(pwd);
     setValidPwd(result);
     const match = pwd === matchPwd;
     setValidMatchPwd(match);
@@ -113,7 +111,7 @@ const Register = () => {
             <img className="App-logo" src={logo} alt="logo" />
           </article>
           <span>
-            <a href="http://localhost:3000/api/auth/login">Visiter</a>
+            <a href="http://localhost:3000/Login">Se connecter</a>
           </span>
         </section>
       ) : (
@@ -300,7 +298,7 @@ const Register = () => {
               <span className="line">
                 <a
                   className="App-link"
-                  href="http://localhost:3000/api/auth/login"
+                  href="http://localhost:3000/login"
                 >
                   Se connecter
                 </a>

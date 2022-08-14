@@ -1,11 +1,27 @@
 import './App.css';
-//import Register from './register';
-import Login from './login';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import {getPosts} from './actions/post';
+import Route from './components/routes';
+import Posts from './components/Posts/Posts';
+import Form from './components/PostForm/PostForm';
 
 function App() {
+  
+  const dispatch = useDispatch();
+
+  useEffect (() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
   return (
     <main className="App"> {/*using main insteed div is semantically correct */} 
-      <Login />
+      <Route />
+      <section>
+            <Posts />
+            <Form />
+      </section>
     </main>
   );
 }

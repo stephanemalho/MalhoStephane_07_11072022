@@ -54,10 +54,9 @@ const postSchema = new mongoose.Schema(
           commenterPseudo: String,
           text: String,
           timestamps: { type: Date, default: Date.now },
-        }
+        },
       ],
       required: true,
-
     },
   },
   {

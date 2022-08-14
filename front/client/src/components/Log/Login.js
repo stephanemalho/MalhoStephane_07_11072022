@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "./context/authProvider";
-import logo from "./logo.png";
-import axios from "./api/axios";
+import "./log.css";
+import AuthContext from "../../context/authProvider";
+import logo from "../../img/logo.png";
+import axios from "../../api/axios";
 const LOGIN_URL = "/api/auth/login";
 
 const Login = () => {
@@ -20,8 +21,8 @@ const Login = () => {
 
   useEffect(() => {
     setErrMsg("");
-    console.log(email);
-    console.log(pwd);
+    //console.log(email);
+    //console.log(pwd);
   }, [email, pwd]);
 
   const handleSubmit = async (e) => {
@@ -32,11 +33,13 @@ const Login = () => {
         JSON.stringify({ email , password: pwd }),
         {
           headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response?.data?.userId));
-      console.log(JSON.stringify(response?.data?.token));
-      const token = response?.data?.token;
+      console.log(JSON.stringify(response.data.userId));
+      console.log(response.data.token);
+      const token = response.data.token;
+      localStorage.setItem("token", token.token);
       setAuth({email, pwd, token});
       setEmail("");
       setPwd("");
@@ -63,7 +66,7 @@ const Login = () => {
           <h1>Vous etes connecté</h1>
           <br />
           <p>
-            <a href="http://localhost:3000/api/auth">Accéder à mon compte</a>
+            <a href="http://localhost:3000">Accéder à mon compte</a>
           </p>
         </section>
       ) : (
@@ -106,9 +109,9 @@ const Login = () => {
             <span className="line">
               <a
                 className="App-link"
-                href="http://localhost:3000/api/auth/signup"
+                href="http://localhost:3000/Register"
               >
-                Se connecter
+                S'inscrire
               </a>
             </span>
           </p>
