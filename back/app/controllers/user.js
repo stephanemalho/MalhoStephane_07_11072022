@@ -97,6 +97,7 @@ exports.login = (req, res, next) => {
             token: { token, expiresIn },
             User: user,
             hateoasLinks: hateoasLinks(req, user._id),
+            
           });     
         })
         .catch((error) => res.status(500).json({ error })); // Internal Server Error

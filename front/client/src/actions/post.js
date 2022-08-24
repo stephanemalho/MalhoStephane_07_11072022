@@ -16,13 +16,12 @@ export function getPosts() {
 export function createPost(newPost) {
   return async (dispatch) => {
     try {
-      const { data } = await api.createPost(newPost);
-      dispatch({ type: 'CREATE_POST', payload: data });
+      const res = await api.createPost(newPost);
+      dispatch({ type: 'CREATE', payload: res.data });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   };
 }
-
 
 

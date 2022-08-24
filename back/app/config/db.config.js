@@ -43,21 +43,6 @@ function serializer(data) {
   return `db.${data.coll}.${data.method}(${query}, ${options});`;
 }
 
-// mongoose.set("debug", function (coll, method, query, doc, options) {
-//   let set = {
-//     coll: coll,
-//     method: method,
-//     query: query,
-//     doc: doc,
-//     options: options,
-//   };
-//   log.info(
-//     colors.yellow({
-//       dbQuery: set,
-//     })
-//   );
-// });
-
 mongoose // connect to mongoDB and send message to console on success or failure
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,

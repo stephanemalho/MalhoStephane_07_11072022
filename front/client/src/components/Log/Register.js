@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../../api/axios";
+import Login from "./Login";
 
 const USER_REGEX = /^[a-zA-Z\u00C0-\u017F][a-zA-Z0-9-_\u00C0-\u017F]{3,23}$/;
 const PWD_REGEX =
@@ -105,15 +106,7 @@ const Register = () => {
   return (
     <>
       {successMsg ? (
-        <section>
-          <article className="display-title-form">
-            <h1>Merci de votre inscription:</h1>
-            <img className="App-logo" src={logo} alt="logo" />
-          </article>
-          <span>
-            <a href="http://localhost:3000/Login">Se connecter</a>
-          </span>
-        </section>
+       <Login />
       ) : (
         <section>
           <p

@@ -13,4 +13,3 @@ const getPost = (posts = [], action) => {
 
 export default getPost; // change export method later removing getposts export default the function directly
 
-// start the video at 1h04 in youtube

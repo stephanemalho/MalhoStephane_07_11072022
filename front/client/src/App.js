@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import {getPosts} from './actions/post';
 import Route from './components/routes';
-import Posts from './components/Posts/Posts';
-import Form from './components/PostForm/PostForm';
+//import Posts from './components/Posts/Posts';
+import PostForm from './components/PostForm/PostForm';
 
 function App() {
   
@@ -18,10 +18,8 @@ function App() {
   return (
     <main className="App"> {/*using main insteed div is semantically correct */} 
       <Route />
-      <section>
-            <Posts />
-            <Form />
-      </section>
+            {/* <Posts /> */}
+            <PostForm />
     </main>
   );
 }

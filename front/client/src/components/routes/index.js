@@ -5,7 +5,7 @@ import Login from '../../components/Log/Login';
 import Register from '../../components/Log/Register';
 import Trending from '../../pages/Trending';
 import Profil from '../../pages/Profil';
-import NavBar from '../Navbar';
+import NavBar from '../Header';
 
 const index = () => {
   return (

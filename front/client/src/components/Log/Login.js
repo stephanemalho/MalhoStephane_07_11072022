@@ -3,6 +3,7 @@ import "./log.css";
 import AuthContext from "../../context/authProvider";
 import logo from "../../img/logo.png";
 import axios from "../../api/axios";
+import Home from "../../pages/Home";
 const LOGIN_URL = "/api/auth/login";
 
 const Login = () => {
@@ -39,7 +40,9 @@ const Login = () => {
       console.log(JSON.stringify(response.data.userId));
       console.log(response.data.token);
       const token = response.data.token;
+      const userId = JSON.stringify(response.data.userId);
       localStorage.setItem("token", token.token);
+      localStorage.setItem("userId", userId);
       setAuth({email, pwd, token});
       setEmail("");
       setPwd("");
@@ -62,13 +65,7 @@ const Login = () => {
   return (
     <>
       {successMsg ? (
-        <section>
-          <h1>Vous etes connecté</h1>
-          <br />
-          <p>
-            <a href="http://localhost:3000">Accéder à mon compte</a>
-          </p>
-        </section>
+       <Home />
       ) : (
         <section>
           <p
