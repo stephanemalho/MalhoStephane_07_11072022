@@ -1,0 +1,12 @@
+.valid {
+  background-color: #00b300;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 20px auto;
+}
+
+.hidde {
+  display: none;
+}
+
