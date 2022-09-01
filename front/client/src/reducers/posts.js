@@ -1,4 +1,4 @@
-const getPost = (posts = [], action) => {
+const posts = (posts = [], action) => {
   switch (action.type) {
     case 'FETCH_ALL':
       return action.payload;
@@ -11,5 +11,5 @@ const getPost = (posts = [], action) => {
   }
 }
 
-export default getPost; // change export method later removing getposts export default the function directly
+export default posts; 
 

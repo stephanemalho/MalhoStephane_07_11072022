@@ -41,6 +41,7 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -102,6 +103,12 @@ const Register = () => {
       errRef.current.focus();
     }
   };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setSuccessMsg(true);
+  }
+
 
   return (
     <>
@@ -287,15 +294,8 @@ const Register = () => {
               Créer un compte
             </button>
             <p>
-              Déja inscrit ?<br />
-              <span className="line">
-                <a
-                  className="App-link"
-                  href="http://localhost:3000/login"
-                >
-                  Se connecter
-                </a>
-              </span>
+              <b>Déja inscrit ?</b><br />
+                <button onClick={handleLogin}>Se connecter</button>
             </p>
           </form>
         </section>

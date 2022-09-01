@@ -17,6 +17,10 @@ h1 {
   font-size: 1.5em;
   padding-top: 60px;
 }
+p , label , button {
+  font-weight: bold;
+}
+
 .App-logo {
   width: 202px;
 }

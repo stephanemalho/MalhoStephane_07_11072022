@@ -1,0 +1,47 @@
+.postCard {
+  width: 50vw;
+  height: auto;
+  box-shadow: 0 0 10px 0 grey;
+  margin: auto;
+}
+
+figcaption {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+
+.imageItems {
+  padding: 20px;
+  z-index: 10;
+  color: white;
+  font-weight: bold;
+}
+
+.messageItems {
+  background-color: white;
+  padding: 10px;
+}
+
+.changeImageIcon {
+  background-color:rgba(21, 14, 14, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border: none;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  text-shadow: 0 0 1px black;
+}

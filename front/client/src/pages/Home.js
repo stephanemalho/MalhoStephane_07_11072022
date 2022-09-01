@@ -1,12 +1,13 @@
 import React from 'react';
-import PostSide from '../components/Posts/Posts';
+import './pages.css'
+import '../components/Posts/Post/post.css';
+import Posts from '../components/Posts/Posts';
 
 const Home = () => {
   return (
     <div className='PostSide'>
-      page  Home
-
-      <PostSide />
+      <h1>Actualité du groupe</h1>
+      <Posts />
     </div>
   );
 };

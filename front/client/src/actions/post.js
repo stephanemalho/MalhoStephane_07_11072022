@@ -2,7 +2,6 @@ import * as api from "../api/axios";
 
 export function getPosts() {
   return async (dispatch) => {
-
     try {
       const { data } = await api.fetchPosts();
       dispatch({ type: 'FETCH_ALL', payload: data });
@@ -23,5 +22,6 @@ export function createPost(newPost) {
     }
   };
 }
+
 
 

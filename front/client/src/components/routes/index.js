@@ -5,12 +5,12 @@ import Login from '../../components/Log/Login';
 import Register from '../../components/Log/Register';
 import Trending from '../../pages/Trending';
 import Profil from '../../pages/Profil';
-import NavBar from '../Header';
+import Header from '../Header/Header';
 
 const index = () => {
   return (
     <Router>
-      <NavBar />
+      <Header />
       <Routes>
         {" "}
         {/* <Routes> to replace Switch */}

@@ -4,6 +4,7 @@ import AuthContext from "../../context/authProvider";
 import logo from "../../img/logo.png";
 import axios from "../../api/axios";
 import Home from "../../pages/Home";
+import Register from "./Register";
 const LOGIN_URL = "/api/auth/login";
 
 const Login = () => {
@@ -15,6 +16,7 @@ const Login = () => {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
+  const [registerPage, setRegisterPage] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -62,11 +64,16 @@ const Login = () => {
     }
   };
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    setRegisterPage(true);
+  }
+
   return (
     <>
       {successMsg ? (
        <Home />
-      ) : (
+      ) : registerPage ? <Register /> : (
         <section>
           <p
             ref={errRef}
@@ -100,18 +107,11 @@ const Login = () => {
               required
             />
           <button>Connexion</button>
-          </form>
           <p>
             Besoin d'un compte ?<br />
-            <span className="line">
-              <a
-                className="App-link"
-                href="http://localhost:3000/Register"
-              >
-                S'inscrire
-              </a>
-            </span>
+            <button onClick={handleRegister}>S'enregister</button>
           </p>
+          </form>
         </section>
       )}
     </>
