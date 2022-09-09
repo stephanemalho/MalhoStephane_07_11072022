@@ -87,7 +87,7 @@ exports.login = (req, res, next) => {
         .compare(req.body.password, user.password) // compare the password
         .then((valid) => {
           if (!valid) {
-            return res.status(401).json({ error: "Mot de passe incorrect !" }); // Unauthorized
+            return res.status(401).json({ message: "Mot de passe incorrect !" }); // Unauthorized
           }
           user.email = encryptString(user.email);
           const { token, expiresIn } = generateToken(user._id, user.isAdmin); // generate the token
@@ -100,9 +100,9 @@ exports.login = (req, res, next) => {
             
           });     
         })
-        .catch((error) => res.status(500).json({ error })); // Internal Server Error
+        .catch((error) => res.status(500).json({ message: error.message })); // Internal Server Error
     })
-    .catch((error) => res.status(500).json({ error })); // Internal Server Error
+    .catch((error) => res.status(500).json({ message: error.message })); // Internal Server Error
 };
 
 exports.logout = (req, res, next) => {

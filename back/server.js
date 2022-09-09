@@ -17,7 +17,7 @@ const slowDown = require("express-slow-down");
 app.use(hateoasLinker);
 
 // parse requests in json format with:
-app.use(express.json());
+app.use(express.json({limit: '25mb'}));
 
 // To Reduce Fingerprinting disable x-powered-by header
 app.disable('x-powered-by'); 
@@ -44,7 +44,7 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: '25mb', extended: true }));
 
 // By default, $ and . characters are removed completely from user-supplied input in the following places:
 // req.body

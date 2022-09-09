@@ -6,17 +6,26 @@ section {
   background-color: white;
   border-radius: 1em;
   border: 2px solid #ffd7d7;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
+
+
 .display-title-form {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-h1 {
+
+h3 {
   font-size: 1.5em;
   padding-top: 60px;
 }
+
+
+label , button {
+  font-weight: bold;
+}
+
 .App-logo {
   width: 202px;
 }
@@ -31,6 +40,9 @@ form {
   align-items: left;
   justify-content: center;
   width: 100%;
+}
+form p {
+  font-weight: bold;
 }
 label {
   font-size: 1em;

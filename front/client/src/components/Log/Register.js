@@ -41,6 +41,7 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
 
+
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -103,21 +104,20 @@ const Register = () => {
     }
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    setSuccessMsg(true);
+  }
+
+
   return (
     <>
       {successMsg ? (
        <Login />
       ) : (
         <section>
-          <p
-            ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
-            aria-live="assertive"
-          >
-            {errMsg}
-          </p>
           <article className="display-title-form">
-            <h1>Créer un compte </h1>
+            <h3>Créer un compte </h3>
             <img className="App-logo" src={logo} alt="logo" />
           </article>
           <form onSubmit={handleSubmit}>
@@ -286,16 +286,16 @@ const Register = () => {
             >
               Créer un compte
             </button>
+            <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
             <p>
-              Déja inscrit ?<br />
-              <span className="line">
-                <a
-                  className="App-link"
-                  href="http://localhost:3000/login"
-                >
-                  Se connecter
-                </a>
-              </span>
+              <b>Déja inscrit ?</b><br />
+                <button onClick={handleLogin}>Se connecter</button>
             </p>
           </form>
         </section>
