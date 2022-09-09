@@ -1,9 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
 import "./post.css";
 import Post from "./Post/Post";
-import LoaderPosts from "../LoaderPosts/LoaderPosts";
 
 const Posts = () => {
   const posts = useSelector((state) => state.posts);
@@ -11,7 +9,7 @@ const Posts = () => {
   console.log(posts);
 
   return !posts.length ? (
-    <LoaderPosts />
+    <h1>Loading...</h1>
   ) : (
     <div className="PostSide">
       {posts.map((post) => (

@@ -1,9 +1,11 @@
 import { useRef, useState, useEffect, useContext } from "react";
+import { Navigate } from "react-router-dom";
+// import Home from "../../pages/Home";
+
 import "./log.css";
 import AuthContext from "../../context/authProvider";
 import logo from "../../img/logo.png";
 import axios from "../../api/axios";
-import Home from "../../pages/Home";
 import Register from "./Register";
 const LOGIN_URL = "/api/auth/login";
 
@@ -17,6 +19,7 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
   const [registerPage, setRegisterPage] = useState(false);
+  // const [confirmRedirect, setConfirmRedirect] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -24,8 +27,6 @@ const Login = () => {
 
   useEffect(() => {
     setErrMsg("");
-    //console.log(email);
-    //console.log(pwd);
   }, [email, pwd]);
 
   const handleSubmit = async (e) => {
@@ -49,16 +50,16 @@ const Login = () => {
       setEmail("");
       setPwd("");
       setSuccessMsg(true);
+      
     } catch (err) {
-      console.log(err)
-      if (!err?.response) {
-        setErrMsg("Erreur de serveur");
-      } else if  (err.response?.status === 400) {
-        setErrMsg("Courriel ou Mot de passe incorecte");
-      } else if  (err.response?.status === 401) {
-        setErrMsg("Profil non autorisé");
-      }else {
-        setErrMsg("Connection impossible");
+      // setErrMsg(err.response.data.error);
+      // console.log(err);
+      // console.log(err.response.data.error);
+      if (err.response.data.error) {
+        setErrMsg(err.response.data.error);
+      }
+      if (err.response.data.message) {
+        setErrMsg(err.response.data.message);
       }
       errRef.current.focus();
     }
@@ -72,18 +73,11 @@ const Login = () => {
   return (
     <>
       {successMsg ? (
-       <Home />
+        <Navigate to="/home" />
       ) : registerPage ? <Register /> : (
         <section>
-          <p
-            ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
-            aria-live="assertive"
-          >
-            {errMsg}
-          </p>
           <article className="display-title-form">
-            <h1>Vous connecter</h1>
+            <h3>Vous connecter</h3>
             <img className="App-logo" src={logo} alt="logo" />
           </article>
           <form onSubmit={handleSubmit}>
@@ -106,7 +100,21 @@ const Login = () => {
               value={pwd}
               required
             />
-          <button>Connexion</button>
+          <button disabled={
+                !email || !pwd
+                  ? true
+                  : false
+              }
+          >Connexion</button>
+
+          <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
+
           <p>
             Besoin d'un compte ?<br />
             <button onClick={handleRegister}>S'enregister</button>

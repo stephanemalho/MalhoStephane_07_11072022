@@ -116,15 +116,8 @@ const Register = () => {
        <Login />
       ) : (
         <section>
-          <p
-            ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
-            aria-live="assertive"
-          >
-            {errMsg}
-          </p>
           <article className="display-title-form">
-            <h1>Créer un compte </h1>
+            <h3>Créer un compte </h3>
             <img className="App-logo" src={logo} alt="logo" />
           </article>
           <form onSubmit={handleSubmit}>
@@ -293,6 +286,13 @@ const Register = () => {
             >
               Créer un compte
             </button>
+            <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
             <p>
               <b>Déja inscrit ?</b><br />
                 <button onClick={handleLogin}>Se connecter</button>
