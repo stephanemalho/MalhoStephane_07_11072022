@@ -1,0 +1,43 @@
+.loader {
+  height: 70vh;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: loader 3s ease-out both;
+}
+
+.loader div:nth-of-type(1) {
+    border-top: 7px dashed #FFD7D7;
+    border-right: 7px dashed #FD2D01;
+    border-bottom: 7px dashed #FFD7D7;
+    border-left: 7px dashed #FD2D01;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    animation: spin 1.6s linear infinite;
+}
+
+
+
+@keyframes loader {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  /* 100% {
+    opacity: 0;
+    visibility: hidden;
+  } */
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

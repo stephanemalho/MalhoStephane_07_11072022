@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createPost } from "../../actions/post";
-import Home from "../../pages/Home";
+import "./form.css";
+import posts from "../Posts/Posts";
 
 function PostForm() {
   // état
@@ -18,7 +19,13 @@ function PostForm() {
 
     const formData = new FormData();
     formData.append("message", postMessage);
+
+
+    if (selectedFile) {
     formData.append("image", selectedFile);
+  } else {
+    formData.append("image", "");
+  }
 
     dispatch(createPost(formData)); // on dispatch l'action createPost
     // on reset le formulaire
@@ -26,15 +33,20 @@ function PostForm() {
     setSelectedFile(null);
     setSuccessSend(true);
     setIsSubmited(true);
-    <Home />;
+    
+    if (!posts.length) {
+      setTimeout(() => {
+        window.location.reload();
+      } , 1000);
+    }
   };
 
 
   // render
   return (
-    <section>
-        <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-          <h3>Creation d'un Post</h3>
+    
+        <form className="PostFormDisplay" autoComplete="off" noValidate onSubmit={handleSubmit}>
+          <h4>Creation d'un Post</h4>
           <p className={ successSend ? "valid" : "hide"}>Votre message a bien été envoyé avec succès</p> 
           <label htmlFor="message">Post</label>
           <input
@@ -54,12 +66,12 @@ function PostForm() {
             />
           </div>
           <button disabled={
-                !postMessage || !selectedFile || isSubmited
+                !postMessage || isSubmited
                   ? true
                   : false
               } type="submit">Submit</button>
         </form>
-      </section>
+      
   );
 }
 
