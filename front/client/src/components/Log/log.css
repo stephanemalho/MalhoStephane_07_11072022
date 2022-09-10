@@ -133,3 +133,23 @@ button:disabled:hover {
   Tertiaire : #4E5166
 
 */
+
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 1.2em;
+    text-align: center;
+  }
+  .display-title-form {
+    flex-direction: column;
+  }
+  .display-title-form h3 {
+    padding-top: 0;
+  }
+  .display-title-form button {
+    margin-top: 1em;
+  }
+  form input {
+    font-size: 0.8em;
+  }
+}
+  

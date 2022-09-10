@@ -63,10 +63,12 @@ const Home = () => {
           </div>
         </>
       ) : (
-        <div className="postContainer">
-          <h1>Actualité du groupe</h1>
+        <>
+        <h1>Actualité du groupe</h1>
+        
           <Posts />
-        </div>
+        
+        </>
       )}
     </>
   );
