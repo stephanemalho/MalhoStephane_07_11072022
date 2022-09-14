@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import moment from "moment";
 import {
   faEllipsis,
@@ -7,9 +8,14 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deletePost } from "../../../actions/post";
 
 
 const Post = ({ post, setCurrentId }) => {
+
+  const dispatch = useDispatch();
+
+
   // render
   return (
     <figure className="card">
@@ -37,7 +43,10 @@ const Post = ({ post, setCurrentId }) => {
         <button className="dislikeButton" onClick={() => {}}>
           <FontAwesomeIcon icon={faThumbsDown} /> {post.dislikes}
         </button>
-        <button className="deletePostButton" onClick={() => {}}>
+        <button className="deletePostButton" onClick={() => 
+
+          dispatch(deletePost(post._id))
+        }>
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
