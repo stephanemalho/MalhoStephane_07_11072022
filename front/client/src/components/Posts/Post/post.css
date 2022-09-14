@@ -78,6 +78,10 @@ figcaption {
   font-weight: bold;
   text-shadow: 0 0 1px black;
 }
+.changeImageIcon a {
+  color: white;
+  text-decoration: none;
+}
 
 @media screen and (max-width: 600px) {
   .card {

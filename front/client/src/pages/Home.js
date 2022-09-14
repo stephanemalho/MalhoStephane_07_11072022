@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-
-import "./pages.css";
 import "./home.css";
 import "../components/Posts/Post/post.css";
 import Posts from "../components/Posts/Posts";
@@ -64,7 +62,7 @@ const Home = () => {
         </>
       ) : (
         <>
-        <h1>Actualité du groupe</h1>
+        <h1 id="goToPostFormOnClick">Actualité du groupe</h1>
         
           <Posts />
         

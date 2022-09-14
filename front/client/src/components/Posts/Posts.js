@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "./post.css";
 import Post from "./Post/Post";
@@ -10,14 +10,17 @@ const Posts = () => {
 
   console.log(posts);
 
+  const [currentId, setCurrentId] = useState(null);
+
+
   return !posts.length ? (
     <Loader />
   ) : (
     <div className="PostSide">
-      <PostForm />
+      <PostForm currentId={currentId} setCurrentId={setCurrentId}/>
       {posts.map((post) => (
         <div key={post._id}>
-          <Post post={post} />
+          <Post post={post} setCurrentId={setCurrentId}/>
         </div>
       )).reverse()}
     </div>

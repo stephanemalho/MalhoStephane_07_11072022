@@ -62,7 +62,7 @@ exports.updatePost = (req, res, next) => {
     ? {
         imageUrl: `images/image-url/${req.file.filename}`,
       }
-    : { ...req.body }; // if there is a file, add the image url to the sauce object
+    : { ...req.body }; // if there is a file, add the image url to the post object
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       const token = req.headers?.authorization.split(" ")[1];
@@ -82,7 +82,7 @@ exports.updatePost = (req, res, next) => {
       } catch (error) {
         console.log(error);
       }
-      Post.findByIdAndUpdate({ _id: req.params.id }, postObject, { new: true })
+      Post.findByIdAndUpdate({ _id: req.params.id }, postObject , { new: true })
         .then((post) =>
           res.status(200).json(post, hateoasLinks(req, post._id))
         ) // ok
@@ -90,7 +90,6 @@ exports.updatePost = (req, res, next) => {
     })
     .catch((error) => res.status(404).json({ error })); // not found
 }
-
 
 
 /*****************************************************************

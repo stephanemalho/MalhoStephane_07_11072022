@@ -31,3 +31,33 @@ export const fetchPosts = () => {
   });
 };
 
+export const updatePost = (id, updatedPost) => {
+  const token = localStorage.getItem("token");
+
+  return axios.put(`${postsUrl}${id}`, updatedPost, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export const deletePost = (id) => {
+  const token = localStorage.getItem("token");
+
+  return axios.delete(`${postsUrl}${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+  
+export const likePost = (id ) => {
+  const token = localStorage.getItem("token");
+
+  return axios.patch(`${postsUrl}${id}/like`, null, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
