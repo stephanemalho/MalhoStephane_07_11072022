@@ -19,6 +19,7 @@ const Home = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setIsConnected(true);
+      
     }
   }, [setIsConnected]);
 
@@ -63,9 +64,7 @@ const Home = () => {
       ) : (
         <>
         <h1 id="goToPostFormOnClick">Actualité du groupe</h1>
-        
           <Posts />
-        
         </>
       )}
     </>

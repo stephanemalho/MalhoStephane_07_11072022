@@ -31,28 +31,28 @@ const userSchema = mongoose.Schema(
       trim: true,
       unique: true,
     },
-    firstname: { 
-      type: String,
-      minlength: 2,
-      maxlength: 20,
-      trim: true,      
-    },
-    lastname: {
-      type: String,
-      minlength: 2,
-      maxlength: 20,
-      trim: true,
-    },
+    // firstname: { 
+    //   type: String,
+    //   minlength: 2,
+    //   maxlength: 20,
+    //   trim: true,      
+    // },
+    // lastname: {
+    //   type: String,
+    //   minlength: 2,
+    //   maxlength: 20,
+    //   trim: true,
+    // },
     bio: {
       type: String,
       minlength: 2,
       maxlength: 255,
       trim: true,
     },
-    birthday: { 
-      type: Date,
-      default: Date.now,
-    },
+    // birthday: { 
+    //   type: Date,
+    //   default: Date.now,
+    // },
     avatar: {
       type: String,
       default: "../assets/images/default-avatar/avatar.png",

@@ -1,24 +1,29 @@
 //import react
-import React from "react";
+import React, { useState, useEffect }  from "react";
 import "./loader.css";
 
 function Loader() {
   // use effect to reload the page when the user is connected
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
-      setLoading(true);
-      if (loading) {
-        window.location.reload();
-      }
-    }, 1000);
+      setLoading(false);
+    }, 3000);
   }, [loading]);
 
   return (
-    <div className="loader">
-      <div className="BgAnim">{loading}</div>
-    </div>
+    <>
+    { loading ? (
+      <div className="loader">
+        <div className="BgAnim">{loading}</div>
+      </div>
+    ) : (
+      <div className="posterFirstMessage">
+        <p>Veuillez remplir le formulaire ci-dessus afin de créer un premier post</p>
+      </div>
+    )}
+    </>
   );
 }
 

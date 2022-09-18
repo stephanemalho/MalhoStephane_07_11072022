@@ -10,6 +10,7 @@ import {FontAwesomeIcon}  from "@fortawesome/react-fontawesome";
 import axios from "../../api/axios";
 import Login from "./Login";
 
+
 const USER_REGEX = /^[a-zA-Z\u00C0-\u017F][a-zA-Z0-9-_\u00C0-\u017F]{3,23}$/;
 const PWD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,40}$/;

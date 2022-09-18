@@ -1,5 +1,5 @@
 .loader {
-  height: 70vh;
+  height: 30vh;
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -18,7 +18,23 @@
     animation: spin 1.6s linear infinite;
 }
 
+.posterFirstMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  height: 100px;
+  background-color: #FFD7D7;
+  opacity: 0.9;
+  margin: auto;
+}
 
+.posterFirstMessage p {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
 
 @keyframes loader {
   0% {

@@ -11,10 +11,12 @@ const Posts = () => {
   console.log(posts);
 
   const [currentId, setCurrentId] = useState(null);
-
-
+  
   return !posts.length ? (
+    <>
+    <PostForm currentId={currentId} setCurrentId={setCurrentId}/>
     <Loader />
+    </>
   ) : (
     <div className="PostSide">
       <PostForm currentId={currentId} setCurrentId={setCurrentId}/>

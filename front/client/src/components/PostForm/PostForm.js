@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/post";
 import "./form.css";
-import posts from "../Posts/Posts";
 
 
 function PostForm({ currentId, setCurrentId }) {
@@ -41,19 +40,23 @@ function PostForm({ currentId, setCurrentId }) {
       dispatch(createPost(formData));
     }
     
-    // on reset le formulaire
-    setPostMessage("");
+    // reset the form 
+    setPostMessage(" ");
     setSelectedFile(null);
     setCurrentId(null);
     setSuccessSend(true);
-    setIsSubmited(true);
-
-    if (!posts.length) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    }
   };
+
+  const clear = () => {
+    return (
+      setPostMessage(""),
+      setSelectedFile(null),
+      setCurrentId(null),
+      setSuccessSend(false),
+      setIsSubmited(false)
+    )
+  };
+  
 
   // render
   return (
@@ -88,8 +91,9 @@ function PostForm({ currentId, setCurrentId }) {
         disabled={!postMessage || isSubmited ? true : false}
         type="submit"
       >
-        Submit
+        Envoyer
       </button>
+      <button type="reset" onClick={clear}>Annuler</button>
     </form>
   );
 }

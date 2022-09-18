@@ -8,13 +8,25 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { deletePost } from "../../../actions/post";
-
+import { deletePost, likePost } from "../../../actions/post";
 
 const Post = ({ post, setCurrentId }) => {
 
-  const dispatch = useDispatch();
+  const userId = localStorage.getItem("userId");
+  const postId = JSON.stringify(post.userId);
+  // const isAdmin = localStorage.getItem("isAdmin");
+  
+  try {
+    if (userId === postId) {
+      console.log("true");
+    } else {
+      console.log("false");
+    }
+  } catch (error) {
+    console.log(error);
+  }
 
+  const dispatch = useDispatch();
 
   // render
   return (
@@ -30,23 +42,38 @@ const Post = ({ post, setCurrentId }) => {
         </div>
         <div className="imageItems">
           <button
-            onClick={() => {setCurrentId(post._id)}}
-            className="changeImageIcon"
-          ><a href="#goToPostFormOnClick"><FontAwesomeIcon icon={faEllipsis} /></a></button>
+            onClick={() => {
+              setCurrentId(post._id);
+            }}
+            className={userId === postId ? "changeImageIcon" : "hide"}
+          >
+            <a href="#goToPostFormOnClick">
+              <FontAwesomeIcon icon={faEllipsis} />
+            </a>
+          </button>
         </div>
       </figcaption>
       <div className="messageItems">
         <p className="messageArea">{post.message}</p>
-        <button className="likeButton" onClick={() => {}}>
+        <button
+          className="likeButton"
+          onClick={() =>
+            // add 1 like to the post
+            dispatch(likePost(post._id, { like: 1 }))
+          }
+        >
           <FontAwesomeIcon icon={faThumbsUp} /> {post.likes}
         </button>
-        <button className="dislikeButton" onClick={() => {}}>
+        <button
+          className="dislikeButton"
+          onClick={() => dispatch(likePost(post._id, { like: -1 }))}
+        >
           <FontAwesomeIcon icon={faThumbsDown} /> {post.dislikes}
         </button>
-        <button className="deletePostButton" onClick={() => 
-
-          dispatch(deletePost(post._id))
-        }>
+        <button
+          className={userId === postId ? "deletePostButton" : "hide"}
+          onClick={() => dispatch(deletePost(post._id))}
+        >
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>

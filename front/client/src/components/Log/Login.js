@@ -1,7 +1,5 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import { Navigate } from "react-router-dom";
-// import Home from "../../pages/Home";
-
 import "./log.css";
 import AuthContext from "../../context/authProvider";
 import logo from "../../img/logo.png";
@@ -68,6 +66,7 @@ const Login = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     setRegisterPage(true);
+    
   }
 
   return (

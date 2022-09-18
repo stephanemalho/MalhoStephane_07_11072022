@@ -4,15 +4,20 @@ export default axios.create({
   baseURL: "http://localhost:4000",
 });
 
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+);
+
 const postsUrl = "http://localhost:4000/api/post/";
-
-const userUrl = "http://localhost:4000/api/auth/";
-
-export const getUserMessageFromServer = async () => {
-  const response = await axios.get(userUrl);
-  return response.data;
-}
-
 
 export const createPost = (newPost) =>
 axios.post(postsUrl, newPost, {
@@ -50,14 +55,13 @@ export const deletePost = (id) => {
     },
   });
 }
-  
-export const likePost = (id ) => {
+
+export const likePost = (id, updatedPost) => {
   const token = localStorage.getItem("token");
 
-  return axios.patch(`${postsUrl}${id}/like`, null, {
+  return axios.post(`${postsUrl}${id}/like`, updatedPost, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 }
-

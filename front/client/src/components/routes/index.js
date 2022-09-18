@@ -5,6 +5,7 @@ import Login from '../../components/Log/Login';
 import Register from '../../components/Log/Register';
 import Header from '../Header/Header';
 
+
 const index = () => {
   return (
     <Router>
@@ -15,7 +16,9 @@ const index = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="*" element={<Navigate to="/" />} />{" "}
+        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/logout" element={<Navigate to="/" />} />
+        {" "}
         {/* <Navigate to='/' /> to replace Redirect */}
       </Routes>
     </Router>
