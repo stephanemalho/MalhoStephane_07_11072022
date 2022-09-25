@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getPosts } from "../../../actions/post";
 import moment from "moment";
+// import { getUsers } from "../../../actions/user";
 import {
   faEllipsis,
   faThumbsDown,
@@ -11,6 +13,7 @@ import {
 from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deletePost, likePost } from "../../../actions/post";
+
 
 const Post = ({ post, setCurrentId }) => {
   const userId = localStorage.getItem("userId");
@@ -22,6 +25,27 @@ const Post = ({ post, setCurrentId }) => {
 
   const [userIdLikes, setUserIdLikes] = useState(post.usersLikeId);
   const [userIdDislikes, setUserIdDislikes] = useState(post.usersDislikeId);
+  
+  const [isAdmin, setIsAdminUser] = useState(false);
+
+
+  const USER_Url = "http://localhost:4000/api/auth";
+
+  // call axios to get the user pseudo and check is isAdmin or not 
+  
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`${USER_Url}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });   
+      setIsAdminUser(res.data.isAdmin);
+     };
+    fetchUser();
+  }, [post.userId]);
+
 
   const liked = () => {
     if (userIdLikes.includes(userId) && !userIdDislikes.includes(userId)) {
@@ -90,6 +114,7 @@ const Post = ({ post, setCurrentId }) => {
           alt="post d'utilisateur"
         />
         <div className="imageItems">
+          <span></span>
           <span>{moment(post.createdAt).fromNow()}</span>
         </div>
         <div className="imageItems">
@@ -97,7 +122,7 @@ const Post = ({ post, setCurrentId }) => {
             onClick={() => {
               updatePost();
             }}
-            className={userId === postId ? "changeImageIcon" : "hide"}
+            className={userId === postId || isAdmin ? "changeImageIcon" : "hide"}
           >
             <a href="#goToPostFormOnClick">
               <FontAwesomeIcon icon={faEllipsis} />
@@ -114,7 +139,7 @@ const Post = ({ post, setCurrentId }) => {
           <FontAwesomeIcon icon={faThumbsDown} /> {dislikes}
         </button>
         <button
-          className={userId === postId ? "deletePostButton" : "hide"}
+          className={userId === postId || isAdmin ? "deletePostButton" : "hide"}
           onClick={() => dispatch(deletePost(post._id))}
         >
           <FontAwesomeIcon icon={faTrash} />

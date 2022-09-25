@@ -6,6 +6,7 @@ import Loader from "../Loader/Loader";
 import Post from "./Post/Post";
 import PostForm from "../PostForm/PostForm";
 
+
 const Posts = () => {
   const posts = useSelector((state) => state.posts);
   const [currentId, setCurrentId] = useState(null);
@@ -15,6 +16,8 @@ const Posts = () => {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+
+ 
 
   return !posts.length ? (
     <>
@@ -26,6 +29,7 @@ const Posts = () => {
       <PostForm currentId={currentId} setCurrentId={setCurrentId} />
       {posts
         .map((post) => (
+
           <div key={post._id}>
             <Post post={post} setCurrentId={setCurrentId} />
           </div>

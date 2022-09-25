@@ -28,7 +28,7 @@ const Header = () => {
     <header>
       <div className="logo">
         <NavLink to="/">
-          <img src={blackLogo} alt="logo de groupomania" />
+          <img title="logo groupomania" aria-label="cliquer sur le logo pour retour a la page d'acceuil" src={blackLogo} alt="logo de groupomania" />
         </NavLink>
         <div className="loginIcon">
           { isToken ? (
@@ -40,18 +40,18 @@ const Header = () => {
                 }
               } to="/">
               <li className="HideInSmallScreen">Se déconnecter</li>
-              <li className="IconSmallHeaderLogOut"><FontAwesomeIcon icon={faRightFromBracket} /></li>
+              <li className="IconSmallHeaderLogOut"><FontAwesomeIcon title="Se déconnecter" icon={faRightFromBracket} /></li>
               </NavLink>
             </ul>
           ) : (
-            <ul>
+            <ul className="Login">
             <NavLink to="/register">
               <li className="HideInSmallScreen">S'inscrire</li>
-              <li className="IconSmallHeader"><FontAwesomeIcon icon={faRightFromBracket} /></li>
+              <li className="IconSmallHeader"><FontAwesomeIcon title="S'inscrire"  icon={faRightFromBracket} /></li>
             </NavLink>
             <NavLink to="/login">
               <li className="HideInSmallScreen">Se connecter</li>
-              <li className="IconSmallHeader"><FontAwesomeIcon icon={faRightToBracket} /></li>
+              <li  className="IconSmallHeader"><FontAwesomeIcon title="Se connecter" icon={faRightToBracket} /></li>
             </NavLink>
           </ul>
           )}

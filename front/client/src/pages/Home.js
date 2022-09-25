@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Home = () => {
   // état
   const [isConnected, setIsConnected] = useState(false);
+  const currentUser = localStorage.getItem("pseudo");
   
 
   // comportement
@@ -63,7 +64,7 @@ const Home = () => {
       ) : (
         <>
           <Header />
-            <h1 id="goToPostFormOnClick">Actualité du groupe</h1>
+            <h1 id="goToPostFormOnClick">Actualité du groupe pour {currentUser}</h1>
           <Posts />
         </>
       )}
