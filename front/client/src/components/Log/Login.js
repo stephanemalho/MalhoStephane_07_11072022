@@ -66,7 +66,6 @@ const Login = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     setRegisterPage(true);
-    
   }
 
   return (

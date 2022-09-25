@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./home.css";
 import "../components/Posts/Post/post.css";
 import Posts from "../components/Posts/Posts";
+import Header from "../components/Header/Header";
 import {
   faComments,
   faPaperPlane,
@@ -15,11 +16,9 @@ const Home = () => {
   
 
   // comportement
-  // check if user is connected if yes setIsConnected to true
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setIsConnected(true);
-      
     }
   }, [setIsConnected]);
 
@@ -38,7 +37,7 @@ const Home = () => {
                 fonctionnalités mises à votre disposition pour partager vos
                 expériences de travail.
                 <br />
-                Crée un compte et connectez vous pour pouvoir partager vos
+                Créez un compte et connectez vous pour pouvoir partager vos
                 expériences de travail avec vos collègues.
               </p>
             </article>
@@ -52,7 +51,7 @@ const Home = () => {
               </li>
               <li className="iconContainer">
                 <FontAwesomeIcon icon={faComments} />
-                <p>Commenter les posts de vos collègues</p>
+                <p>Liker-Disliker les posts de vos collègues</p>
               </li>
               <li className="iconContainer">
                 <FontAwesomeIcon icon={faImages} />
@@ -63,7 +62,8 @@ const Home = () => {
         </>
       ) : (
         <>
-        <h1 id="goToPostFormOnClick">Actualité du groupe</h1>
+          <Header />
+            <h1 id="goToPostFormOnClick">Actualité du groupe</h1>
           <Posts />
         </>
       )}

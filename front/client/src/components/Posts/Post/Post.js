@@ -1,32 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { getPosts } from "../../../actions/post";
 import moment from "moment";
 import {
   faEllipsis,
   faThumbsDown,
   faThumbsUp,
   faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+} 
+from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deletePost, likePost } from "../../../actions/post";
 
 const Post = ({ post, setCurrentId }) => {
-
   const userId = localStorage.getItem("userId");
   const postId = JSON.stringify(post.userId);
-  // const isAdmin = localStorage.getItem("isAdmin");
-  
-  try {
-    if (userId === postId) {
-      console.log("true");
-    } else {
-      console.log("false");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
   const dispatch = useDispatch();
+
+  const [likes, setLikes] = useState(post.likes);
+  const [dislikes, setDislikes] = useState(post.dislikes);
+
+  const [userIdLikes, setUserIdLikes] = useState(post.usersLikeId);
+  const [userIdDislikes, setUserIdDislikes] = useState(post.usersDislikeId);
+
+  const liked = () => {
+    if (userIdLikes.includes(userId) && !userIdDislikes.includes(userId)) {
+      setUserIdLikes(userIdLikes.filter((id) => id !== userId));
+      dispatch(likePost(post._id, { like: 0 }, setLikes, setUserIdLikes));
+      return setLikes(likes - 1);
+    }
+    if (!userIdLikes.includes(userId) && !userIdDislikes.includes(userId)) {
+      setUserIdLikes([...userIdLikes, userId]);
+      dispatch(likePost(post._id, { like: 1 }, setLikes, setUserIdLikes));
+      return setLikes(likes + 1);
+    }
+    if (!userIdLikes.includes(userId) && userIdDislikes.includes(userId)) {
+      setUserIdLikes([...userIdLikes, userId]);
+      setUserIdDislikes(userIdDislikes.filter((id) => id !== userId));
+      dispatch(likePost(post._id, { like: 1 }, setLikes, setUserIdLikes));
+      return (setLikes(likes + 1), setDislikes(dislikes - 1));
+    }
+    if (userIdLikes.includes(userId) && userIdDislikes.includes(userId)) {
+      return null;
+    }
+  };
+
+  const disliked = () => {
+    if (userIdDislikes.includes(userId) && !userIdLikes.includes(userId)) {
+      setUserIdDislikes(userIdDislikes.filter((id) => id !== userId));
+      dispatch(likePost(post._id, { like: 0 }, setDislikes, setUserIdDislikes));
+      return setDislikes(dislikes - 1);
+    }
+    if (!userIdDislikes.includes(userId) && !userIdLikes.includes(userId)) {
+      setUserIdDislikes([...userIdDislikes, userId]);
+      dispatch(
+        likePost(post._id, { like: -1 }, setDislikes, setUserIdDislikes)
+      );
+      return setDislikes(dislikes + 1);
+    }
+    if (!userIdDislikes.includes(userId) && userIdLikes.includes(userId)) {
+      setUserIdDislikes([...userIdDislikes, userId]);
+      setUserIdLikes(userIdLikes.filter((id) => id !== userId));
+      dispatch(
+        likePost(post._id, { like: -1 }, setDislikes, setUserIdDislikes)
+      );
+      return (setDislikes(dislikes + 1), setLikes(likes - 1));
+    }
+    if (userIdDislikes.includes(userId) && userIdLikes.includes(userId)) {
+      return null;
+    }
+  };
+
+  // send the post message and file to the form to be updated
+  const updatePost = () => {
+    setCurrentId(post._id);
+  };
+
+  useEffect(() => {
+    dispatch(getPosts(postMessage));
+  }, [dispatch]);
 
   // render
   return (
@@ -43,7 +95,7 @@ const Post = ({ post, setCurrentId }) => {
         <div className="imageItems">
           <button
             onClick={() => {
-              setCurrentId(post._id);
+              updatePost();
             }}
             className={userId === postId ? "changeImageIcon" : "hide"}
           >
@@ -55,20 +107,11 @@ const Post = ({ post, setCurrentId }) => {
       </figcaption>
       <div className="messageItems">
         <p className="messageArea">{post.message}</p>
-        <button
-          className="likeButton"
-          onClick={() =>
-            // add 1 like to the post
-            dispatch(likePost(post._id, { like: 1 }))
-          }
-        >
-          <FontAwesomeIcon icon={faThumbsUp} /> {post.likes}
+        <button className="likeButton" onClick={liked}>
+          <FontAwesomeIcon icon={faThumbsUp} /> {likes}
         </button>
-        <button
-          className="dislikeButton"
-          onClick={() => dispatch(likePost(post._id, { like: -1 }))}
-        >
-          <FontAwesomeIcon icon={faThumbsDown} /> {post.dislikes}
+        <button className="dislikeButton" onClick={disliked}>
+          <FontAwesomeIcon icon={faThumbsDown} /> {dislikes}
         </button>
         <button
           className={userId === postId ? "deletePostButton" : "hide"}

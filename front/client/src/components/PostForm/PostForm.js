@@ -3,48 +3,46 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/post";
 import "./form.css";
 
-
 function PostForm({ currentId, setCurrentId }) {
   // état
   const [postMessage, setPostMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [successSend, setSuccessSend] = useState(false);
   const [isSubmited, setIsSubmited] = useState(false);
-  const post = useSelector((state) =>
-    currentId ? state.posts.find((p) => p._id === currentId) : null
-  );
-
+  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
   const dispatch = useDispatch();
+  
 
+// comportement 
   useEffect(() => {
     if (post) setPostMessage(post.message);
     if (post) setSelectedFile(post.selectedFile);
   }, [post]);
 
-  // comportement
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("message", postMessage);
+    setPostMessage(postMessage);
 
     if (selectedFile) {
       formData.append("image", selectedFile);
+      setSelectedFile(selectedFile);
     } else {
-      formData.append("image", "");
+      formData.append("image", "../../img/orange-logo.png");
+      setSelectedFile(" ");
     }
+    setPostMessage(e.target.value);
+    setSelectedFile(e.target.value);
 
     if (currentId) {
       dispatch(updatePost(currentId, formData));
+
     } else {
       dispatch(createPost(formData));
     }
-    
-    // reset the form 
-    setPostMessage(" ");
-    setSelectedFile(null);
-    setCurrentId(null);
-    setSuccessSend(true);
+    e.target.reset();
   };
 
   const clear = () => {
@@ -54,11 +52,10 @@ function PostForm({ currentId, setCurrentId }) {
       setCurrentId(null),
       setSuccessSend(false),
       setIsSubmited(false)
-    )
+    );
   };
-  
 
-  // render
+  // rendu
   return (
     <form
       className="PostFormDisplay"
@@ -93,7 +90,9 @@ function PostForm({ currentId, setCurrentId }) {
       >
         Envoyer
       </button>
-      <button type="reset" onClick={clear}>Annuler</button>
+      <button type="reset" onClick={clear}>
+        Annuler
+      </button>
     </form>
   );
 }

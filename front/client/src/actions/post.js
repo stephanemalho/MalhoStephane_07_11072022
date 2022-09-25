@@ -12,18 +12,18 @@ export function getPosts() {
   };
 }
 
-
 export function createPost(newPost) {
   return async (dispatch) => {
     try {
       const res = await api.createPost(newPost);
       dispatch({ type: CREATE, payload: res.data });
+      return true;
     } catch (error) {
       console.log(error);
+      return false;
     }
   };
 }
-
 
 export function updatePost(id, post) {
   return async (dispatch) => {
@@ -50,8 +50,8 @@ export function deletePost(id) {
 export function likePost(id, post) {
   return (dispatch) => {
     try {
-      const res = api.likePost(id, post);
-      dispatch({ type: LIKE, payload: res.data });
+      api.likePost(id, post);
+      dispatch({ type: LIKE, payload: id });
     } catch (error) {
       console.log(error);
     }
