@@ -9,15 +9,13 @@ import {
   faThumbsDown,
   faThumbsUp,
   faTrash,
-} 
-from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { deletePost, likePost } from "../../../actions/post";
 
-
 const Post = ({ post, setCurrentId }) => {
   const userId = localStorage.getItem("userId");
-  const postId = JSON.stringify(post.userId);
+  const postId = post.userId;
   const dispatch = useDispatch();
 
   const [likes, setLikes] = useState(post.likes);
@@ -25,83 +23,95 @@ const Post = ({ post, setCurrentId }) => {
 
   const [userIdLikes, setUserIdLikes] = useState(post.usersLikeId);
   const [userIdDislikes, setUserIdDislikes] = useState(post.usersDislikeId);
-  
-  const [isAdmin, setIsAdminUser] = useState(false);
 
+  const [isAdmin, setIsAdminUser] = useState(false);
 
   const USER_Url = "http://localhost:4000/api/auth";
 
-  // call axios to get the user pseudo and check is isAdmin or not 
-  
 
-  useEffect(() => {
+  useEffect(() => { 
     const fetchUser = async () => {
-      const res = await axios.get(`${USER_Url}`, {
+      const res = await axios.get(`${USER_Url}`, { 
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      });   
-      setIsAdminUser(res.data.isAdmin);
-     };
+      });
+      setIsAdminUser(res.data.isAdmin); 
+    };
     fetchUser();
   }, [post.userId]);
 
-
-  const liked = () => {
+  const handleLike = () => {
+    const userId = localStorage.getItem("userId");
     if (userIdLikes.includes(userId) && !userIdDislikes.includes(userId)) {
       setUserIdLikes(userIdLikes.filter((id) => id !== userId));
       dispatch(likePost(post._id, { like: 0 }, setLikes, setUserIdLikes));
       return setLikes(likes - 1);
-    }
-    if (!userIdLikes.includes(userId) && !userIdDislikes.includes(userId)) {
+    } else if (
+      !userIdLikes.includes(userId) &&
+      !userIdDislikes.includes(userId)
+    ) {
       setUserIdLikes([...userIdLikes, userId]);
       dispatch(likePost(post._id, { like: 1 }, setLikes, setUserIdLikes));
       return setLikes(likes + 1);
-    }
-    if (!userIdLikes.includes(userId) && userIdDislikes.includes(userId)) {
+    } else if (
+      !userIdLikes.includes(userId) &&
+      userIdDislikes.includes(userId)
+    ) {
       setUserIdLikes([...userIdLikes, userId]);
       setUserIdDislikes(userIdDislikes.filter((id) => id !== userId));
       dispatch(likePost(post._id, { like: 1 }, setLikes, setUserIdLikes));
       return (setLikes(likes + 1), setDislikes(dislikes - 1));
-    }
-    if (userIdLikes.includes(userId) && userIdDislikes.includes(userId)) {
+    } else {
       return null;
-    }
+    };
   };
 
-  const disliked = () => {
+  const handleDislike = () => {
+    const userId = localStorage.getItem("userId");
     if (userIdDislikes.includes(userId) && !userIdLikes.includes(userId)) {
       setUserIdDislikes(userIdDislikes.filter((id) => id !== userId));
       dispatch(likePost(post._id, { like: 0 }, setDislikes, setUserIdDislikes));
       return setDislikes(dislikes - 1);
-    }
-    if (!userIdDislikes.includes(userId) && !userIdLikes.includes(userId)) {
+    } else if (
+      !userIdDislikes.includes(userId) &&
+      !userIdLikes.includes(userId)
+    ) {
       setUserIdDislikes([...userIdDislikes, userId]);
       dispatch(
         likePost(post._id, { like: -1 }, setDislikes, setUserIdDislikes)
       );
       return setDislikes(dislikes + 1);
-    }
-    if (!userIdDislikes.includes(userId) && userIdLikes.includes(userId)) {
+    } else if (
+      !userIdDislikes.includes(userId) &&
+      userIdLikes.includes(userId)
+    ) {
       setUserIdDislikes([...userIdDislikes, userId]);
       setUserIdLikes(userIdLikes.filter((id) => id !== userId));
       dispatch(
         likePost(post._id, { like: -1 }, setDislikes, setUserIdDislikes)
       );
       return (setDislikes(dislikes + 1), setLikes(likes - 1));
-    }
-    if (userIdDislikes.includes(userId) && userIdLikes.includes(userId)) {
+    } else {
       return null;
     }
   };
 
-  // send the post message and file to the form to be updated
+  // send the post message to the imageUrl form to be updated
   const updatePost = () => {
     setCurrentId(post._id);
+
+    // add post message and file to the form to be updated
+    
+
+    console.log(post.message + "et   " + post.imageUrl);
+
+    
+
   };
 
   useEffect(() => {
-    dispatch(getPosts(postMessage));
+    dispatch(getPosts( postMessage ));
   }, [dispatch]);
 
   // render
@@ -122,27 +132,30 @@ const Post = ({ post, setCurrentId }) => {
             onClick={() => {
               updatePost();
             }}
-            className={userId === postId || isAdmin ? "changeImageIcon" : "hide"}
+            className={
+              userId === postId || isAdmin ? "changeImageIcon" : "hide"
+            }
           >
-            <a href="#goToPostFormOnClick">
-              <FontAwesomeIcon icon={faEllipsis} />
+            <a href="#goToTopOnClick">
+              <FontAwesomeIcon title="Modifier le post" icon={faEllipsis} />
             </a>
           </button>
         </div>
       </figcaption>
       <div className="messageItems">
         <p className="messageArea">{post.message}</p>
-        <button className="likeButton" onClick={liked}>
-          <FontAwesomeIcon icon={faThumbsUp} /> {likes}
+        <button className="likeButton" onClick={handleLike}>
+          <FontAwesomeIcon title="J'aime" icon={faThumbsUp} /> {likes}
         </button>
-        <button className="dislikeButton" onClick={disliked}>
-          <FontAwesomeIcon icon={faThumbsDown} /> {dislikes}
+        <button className="dislikeButton" onClick={handleDislike}>
+          <FontAwesomeIcon title="Je n'aime pas" icon={faThumbsDown} />{" "}
+          {dislikes}
         </button>
         <button
           className={userId === postId || isAdmin ? "deletePostButton" : "hide"}
           onClick={() => dispatch(deletePost(post._id))}
         >
-          <FontAwesomeIcon icon={faTrash} />
+          <FontAwesomeIcon title="Éffacer le post" icon={faTrash} />
         </button>
       </div>
     </figure>

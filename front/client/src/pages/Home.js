@@ -64,7 +64,7 @@ const Home = () => {
       ) : (
         <>
           <Header />
-            <h1 id="goToPostFormOnClick">Actualité du groupe pour {currentUser}</h1>
+            <h1 className="fontWeightSmallScreen" id="goToTopOnClick">Actualité du groupe pour {currentUser}</h1>
           <Posts />
         </>
       )}

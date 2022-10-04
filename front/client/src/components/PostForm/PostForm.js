@@ -3,26 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/post";
 import "./form.css";
 
-function PostForm({ currentId, setCurrentId }) {
+export function PostForm({ currentId, setCurrentId }) {
   // état
   const [postMessage, setPostMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [successSend, setSuccessSend] = useState(false);
   const [isSubmited, setIsSubmited] = useState(false);
-  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
   const dispatch = useDispatch();
-  
 
-// comportement 
+  // comportement
   useEffect(() => {
-    if (post) setPostMessage(post.message);
+    if (post) setPostMessage(post.postMessage);
     if (post) setSelectedFile(post.selectedFile);
   }, [post]);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
+
     formData.append("message", postMessage);
     setPostMessage(postMessage);
 
@@ -38,7 +39,6 @@ function PostForm({ currentId, setCurrentId }) {
 
     if (currentId) {
       dispatch(updatePost(currentId, formData));
-
     } else {
       dispatch(createPost(formData));
     }

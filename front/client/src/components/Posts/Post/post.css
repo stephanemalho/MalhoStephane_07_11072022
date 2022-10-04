@@ -24,8 +24,17 @@
 .likeButton svg, .dislikeButton svg {
   width: 15px;
   height: 15px;
+  margin-right: 3px;
   color: #4E5166;
 }
+
+.activeBtn svg {
+  color: blue;
+}
+
+
+
+
 
 figcaption {
   width: 100%;

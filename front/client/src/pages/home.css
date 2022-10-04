@@ -89,6 +89,10 @@ h2 {
     font-size: 1.2em;
     padding: 3em 0 0 0;
   }
+  .fontWeightSmallScreen {
+    padding: 0;
+  }
+
   .postContainer {
     width: 100%;
   }
