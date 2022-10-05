@@ -2,12 +2,6 @@ const Post = require("../models/post"); // import the post model
 const fs = require("fs"); // file system
 const jwt = require("jsonwebtoken");
 
-
-
-
-/*****************************************************************
- *****************  READ POST BY ITS ID     *********************
- *****************************************************************/
 exports.readPost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }) // find the post
     .then((post) => {
@@ -17,9 +11,6 @@ exports.readPost = (req, res, next) => {
     .catch((error) => res.status(404).json({ error })); // not found
 };
 
-/*****************************************************************
- *****************  READ ALL THE POSTS      *********************
- *****************************************************************/
 exports.readAllPosts = (req, res, next) => {
   Post.find()
     .then((posts) => {
@@ -34,9 +25,6 @@ exports.readAllPosts = (req, res, next) => {
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
-/*****************************************************************
- *****************  CREATE ONE POST         **********************
- *****************************************************************/
 exports.createPost = (req, res, next) => {
   const post = new Post({
     userId: req.auth.userID,
@@ -46,7 +34,6 @@ exports.createPost = (req, res, next) => {
     dislikes : 0,
     usersLikeId : [],
     usersDislikeId : [],
-    comment : [],
   }); // create a new post
   post
     .save() // save the post
@@ -54,9 +41,6 @@ exports.createPost = (req, res, next) => {
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
-/*****************************************************************
- *****************  UPDATE ELEMENT IN POST       *****************
- *****************************************************************/
 exports.updatePost = (req, res, next) => {
   const postObject = req.file
     ? {
@@ -91,10 +75,6 @@ exports.updatePost = (req, res, next) => {
     .catch((error) => res.status(404).json({ error })); // not found
 }
 
-
-/*****************************************************************
- *****************  DELETE THE POST          *********************
- *****************************************************************/
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }) // find the post
     .then((post) => {
@@ -114,12 +94,6 @@ exports.deletePost = (req, res, next) => {
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
-/*****************************************************************
- *****************  LIKE OR DISLIKE A POST     *******************
- *****************  AND SEND THE USER ID       *******************
- *****************  OF THE LIKER OR DISLIKER   *******************
- *****************  TO THE LIKED USER DB       *******************
- *****************************************************************/
 exports.likePost = (req, res, next) => {
   try {
     Post.findById(req.params.id).then((post) => {
@@ -232,9 +206,6 @@ exports.likePost = (req, res, next) => {
   }
 };
 
-/*****************************************************************
- *****************  REPORT THE POST          *********************
- *****************************************************************/
 exports.reportPost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {

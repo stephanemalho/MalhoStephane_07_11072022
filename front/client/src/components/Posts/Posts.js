@@ -17,8 +17,6 @@ const Posts = () => {
     dispatch(getPosts());
   }, [dispatch]);
 
- 
-
   return !posts.length ? (
     <>
       <PostForm currentId={currentId} setCurrentId={setCurrentId} />

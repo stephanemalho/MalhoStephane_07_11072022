@@ -16,9 +16,11 @@ export function PostForm({ currentId, setCurrentId }) {
 
   // comportement
   useEffect(() => {
-    if (post) setPostMessage(post.postMessage);
-    if (post) setSelectedFile(post.selectedFile);
+    //if currentId is known, we want to fill the form with the post data
+    if (post) setPostMessage(post.message);
+  
   }, [post]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,8 +33,8 @@ export function PostForm({ currentId, setCurrentId }) {
       formData.append("image", selectedFile);
       setSelectedFile(selectedFile);
     } else {
-      formData.append("image", "../../img/orange-logo.png");
-      setSelectedFile(" ");
+      formData.append("image", selectedFile );
+      setSelectedFile(selectedFile);
     }
     setPostMessage(e.target.value);
     setSelectedFile(e.target.value);
@@ -42,7 +44,13 @@ export function PostForm({ currentId, setCurrentId }) {
     } else {
       dispatch(createPost(formData));
     }
+    setSuccessSend(true);
     e.target.reset();
+    setTimeout(() => {
+      setSuccessSend(false);
+      setCurrentId(null);
+    }, 3000);
+    
   };
 
   const clear = () => {
@@ -60,20 +68,19 @@ export function PostForm({ currentId, setCurrentId }) {
     <form
       className="PostFormDisplay"
       autoComplete="off"
-      noValidate
       onSubmit={handleSubmit}
     >
       <h4>{currentId ? "Modifier le " : "Créer un "} Post</h4>
       <p className={successSend ? "valid" : "hide"}>
-        Votre message a bien été envoyé avec succès
+        Votre message à été envoyé avec succès
       </p>
-      <label htmlFor="message">Post</label>
+      <label htmlFor="message">Poster (requis)</label>
       <input
         type="textarea"
         name="message"
         variant="outlined"
         label="message"
-        placeholder="Tapez votre texte ici"
+        placeholder={ currentId ? post.message : "Votre message"}
         onChange={(e) => setPostMessage(e.target.value)}
       />
       <div>
@@ -85,12 +92,14 @@ export function PostForm({ currentId, setCurrentId }) {
         />
       </div>
       <button
-        disabled={!postMessage || isSubmited ? true : false}
+        disabled={!postMessage || isSubmited  ? true : false}
         type="submit"
       >
         Envoyer
       </button>
-      <button type="reset" onClick={clear}>
+      <button
+       disabled={!postMessage || isSubmited ? true : false}
+       type="reset" onClick={clear}>
         Annuler
       </button>
     </form>

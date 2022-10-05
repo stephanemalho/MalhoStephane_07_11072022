@@ -25,10 +25,9 @@
   width: 15px;
   height: 15px;
   margin-right: 3px;
-  color: #4E5166;
 }
 
-.activeBtn svg {
+.blueLike {
   color: blue;
 }
 

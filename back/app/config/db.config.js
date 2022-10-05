@@ -55,6 +55,6 @@ mongoose // connect to mongoDB and send message to console on success or failure
   .catch((error) => {
     console.log(colors.red("Database connection error: ❌ " + error)); // log a colored error message
   });
-
+  
 module.exports = mongoose.connection;
 module.exports = log;

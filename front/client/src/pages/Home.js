@@ -47,16 +47,16 @@ const Home = () => {
             <h2>Description des fonctions disponibles sur le réseau</h2>
             <ul className="displayIconsInfo">
               <li className="iconContainer">
-                <FontAwesomeIcon icon={faPaperPlane} />
-                <p>Poster vos messages</p>
-              </li>
-              <li className="iconContainer">
                 <FontAwesomeIcon icon={faComments} />
                 <p>Liker-Disliker les posts de vos collègues</p>
               </li>
               <li className="iconContainer">
                 <FontAwesomeIcon icon={faImages} />
-                <p>Ajouter une images à votre message</p>
+                <p>Ajouter une image à votre message</p>
+              </li>
+              <li className="iconContainer">
+                <FontAwesomeIcon icon={faPaperPlane} />
+                <p>Poster vos messages</p>
               </li>
             </ul>
           </div>

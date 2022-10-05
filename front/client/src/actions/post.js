@@ -58,16 +58,6 @@ export function likePost(id, post) {
   }
 }
 
-// export function getUser() {
-//   return async (dispatch) => {
-//     try {
-//       const res = await api.fetchUser();
-//       dispatch({ type: FETCH_ALL, payload: res.data });
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
-// }
 
 
 

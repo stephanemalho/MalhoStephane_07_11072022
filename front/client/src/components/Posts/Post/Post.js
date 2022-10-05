@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getPosts } from "../../../actions/post";
 import moment from "moment";
+
 // import { getUsers } from "../../../actions/user";
 import {
   faEllipsis,
@@ -97,16 +98,12 @@ const Post = ({ post, setCurrentId }) => {
     }
   };
 
-  // send the post message to the imageUrl form to be updated
-  const updatePost = () => {
+  const updatePost = () => { 
     setCurrentId(post._id);
-
-    // add post message and file to the form to be updated
+    
     
 
-    console.log(post.message + "et   " + post.imageUrl);
-
-    
+    console.log(post.message + "    et   " + post.imageUrl);
 
   };
 
@@ -124,7 +121,6 @@ const Post = ({ post, setCurrentId }) => {
           alt="post d'utilisateur"
         />
         <div className="imageItems">
-          <span></span>
           <span>{moment(post.createdAt).fromNow()}</span>
         </div>
         <div className="imageItems">
@@ -145,10 +141,22 @@ const Post = ({ post, setCurrentId }) => {
       <div className="messageItems">
         <p className="messageArea">{post.message}</p>
         <button className="likeButton" onClick={handleLike}>
-          <FontAwesomeIcon title="J'aime" icon={faThumbsUp} /> {likes}
+          { userIdLikes.includes(userId) ? ( 
+            <FontAwesomeIcon className="blueLike" title="J'aime" icon={faThumbsUp} />
+
+          ) : (
+            <FontAwesomeIcon  title="J'aime" icon={faThumbsUp} />
+           ) }
+          
+          {likes}
         </button>
         <button className="dislikeButton" onClick={handleDislike}>
-          <FontAwesomeIcon title="Je n'aime pas" icon={faThumbsDown} />{" "}
+        { userIdDislikes.includes(userId) ? ( 
+            <FontAwesomeIcon className="blueLike" title="J'aime" icon={faThumbsDown} />
+          ) : (
+            <FontAwesomeIcon title="Je n'aime pas" icon={faThumbsDown} />
+           ) }
+          {" "}
           {dislikes}
         </button>
         <button
