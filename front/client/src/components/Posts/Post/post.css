@@ -28,9 +28,12 @@
 }
 
 .blueLike {
-  color: blue;
+  color: rgb(47, 47, 188);
 }
 
+.greyLike {
+  color: rgba(72, 72, 75, 0.5);
+}
 
 
 

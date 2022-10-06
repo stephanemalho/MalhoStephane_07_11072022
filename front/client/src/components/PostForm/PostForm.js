@@ -5,10 +5,13 @@ import "./form.css";
 
 export function PostForm({ currentId, setCurrentId }) {
   // état
-  const [postMessage, setPostMessage] = useState("");
+  const [postMessage, setPostMessage] = useState({ message : ""});
   const [selectedFile, setSelectedFile] = useState(null);
   const [successSend, setSuccessSend] = useState(false);
   const [isSubmited, setIsSubmited] = useState(false);
+  // const [updateMessage, setUpdateMessage] = useState(postMessage.message);
+
+
   const post = useSelector((state) =>
     currentId ? state.posts.find((p) => p._id === currentId) : null
   );
@@ -55,7 +58,7 @@ export function PostForm({ currentId, setCurrentId }) {
 
   const clear = () => {
     return (
-      setPostMessage(""),
+      setPostMessage(" "),
       setSelectedFile(null),
       setCurrentId(null),
       setSuccessSend(false),
@@ -79,8 +82,8 @@ export function PostForm({ currentId, setCurrentId }) {
         type="textarea"
         name="message"
         variant="outlined"
+        value={currentId ? postMessage : "Votre message"}
         label="message"
-        placeholder={ currentId ? post.message : "Votre message"}
         onChange={(e) => setPostMessage(e.target.value)}
       />
       <div>
@@ -91,7 +94,7 @@ export function PostForm({ currentId, setCurrentId }) {
           onChange={(e) => setSelectedFile(e.target.files[0])}
         />
       </div>
-      <button
+      <button 
         disabled={!postMessage || isSubmited  ? true : false}
         type="submit"
       >

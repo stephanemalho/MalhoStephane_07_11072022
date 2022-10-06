@@ -29,15 +29,14 @@ const Post = ({ post, setCurrentId }) => {
 
   const USER_Url = "http://localhost:4000/api/auth";
 
-
-  useEffect(() => { 
+  useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`${USER_Url}`, { 
+      const res = await axios.get(`${USER_Url}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setIsAdminUser(res.data.isAdmin); 
+      setIsAdminUser(res.data.isAdmin);
     };
     fetchUser();
   }, [post.userId]);
@@ -65,7 +64,7 @@ const Post = ({ post, setCurrentId }) => {
       return (setLikes(likes + 1), setDislikes(dislikes - 1));
     } else {
       return null;
-    };
+    }
   };
 
   const handleDislike = () => {
@@ -98,17 +97,14 @@ const Post = ({ post, setCurrentId }) => {
     }
   };
 
-  const updatePost = () => { 
+  const updatePost = () => {
     setCurrentId(post._id);
-    
-    
-
+    // send post.message to the form when the update button is clicked and the form is displayed
     console.log(post.message + "    et   " + post.imageUrl);
-
   };
 
   useEffect(() => {
-    dispatch(getPosts( postMessage ));
+    dispatch(getPosts(postMessage));
   }, [dispatch]);
 
   // render
@@ -141,22 +137,28 @@ const Post = ({ post, setCurrentId }) => {
       <div className="messageItems">
         <p className="messageArea">{post.message}</p>
         <button className="likeButton" onClick={handleLike}>
-          { userIdLikes.includes(userId) ? ( 
-            <FontAwesomeIcon className="blueLike" title="J'aime" icon={faThumbsUp} />
-
+          {userIdLikes.includes(userId) ? (
+            <FontAwesomeIcon
+              className="blueLike"
+              title="J'aime"
+              icon={faThumbsUp}
+            />
           ) : (
-            <FontAwesomeIcon  title="J'aime" icon={faThumbsUp} />
-           ) }
-          
+            <FontAwesomeIcon className="greyLike" title="J'aime" icon={faThumbsUp} />
+          )}
+
           {likes}
         </button>
         <button className="dislikeButton" onClick={handleDislike}>
-        { userIdDislikes.includes(userId) ? ( 
-            <FontAwesomeIcon className="blueLike" title="J'aime" icon={faThumbsDown} />
+          {userIdDislikes.includes(userId) ? (
+            <FontAwesomeIcon
+              className="blueLike"
+              title="J'aime"
+              icon={faThumbsDown}
+            />
           ) : (
-            <FontAwesomeIcon title="Je n'aime pas" icon={faThumbsDown} />
-           ) }
-          {" "}
+            <FontAwesomeIcon className="greyLike" title="Je n'aime pas" icon={faThumbsDown} />
+          )}{" "}
           {dislikes}
         </button>
         <button
