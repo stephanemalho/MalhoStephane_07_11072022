@@ -5,12 +5,11 @@ import "./form.css";
 
 export function PostForm({ currentId, setCurrentId }) {
   // état
-  const [postMessage, setPostMessage] = useState({ message : ""});
+  const [postMessage, setPostMessage] = useState(" ");
   const [selectedFile, setSelectedFile] = useState(null);
   const [successSend, setSuccessSend] = useState(false);
   const [isSubmited, setIsSubmited] = useState(false);
-  // const [updateMessage, setUpdateMessage] = useState(postMessage.message);
-
+  
 
   const post = useSelector((state) =>
     currentId ? state.posts.find((p) => p._id === currentId) : null
@@ -18,12 +17,11 @@ export function PostForm({ currentId, setCurrentId }) {
   const dispatch = useDispatch();
 
   // comportement
+
   useEffect(() => {
     //if currentId is known, we want to fill the form with the post data
     if (post) setPostMessage(post.message);
-  
   }, [post]);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,9 +34,10 @@ export function PostForm({ currentId, setCurrentId }) {
       formData.append("image", selectedFile);
       setSelectedFile(selectedFile);
     } else {
-      formData.append("image", selectedFile );
+      formData.append("image", selectedFile);
       setSelectedFile(selectedFile);
     }
+   
     setPostMessage(e.target.value);
     setSelectedFile(e.target.value);
 
@@ -52,9 +51,21 @@ export function PostForm({ currentId, setCurrentId }) {
     setTimeout(() => {
       setSuccessSend(false);
       setCurrentId(null);
+      setPostMessage(" ");
     }, 3000);
-    
   };
+
+  // const handleChange = ({currentId}) => {
+  //   if (currentId) {
+  //     console.log("currentId", currentId + "+ " + postMessage);
+   
+  //   } else {
+       
+  //     console.log("currentId", currentId + "+ " + postMessage);
+      
+
+  //   }
+  // }
 
   const clear = () => {
     return (
@@ -82,8 +93,10 @@ export function PostForm({ currentId, setCurrentId }) {
         type="textarea"
         name="message"
         variant="outlined"
-        value={currentId ? postMessage : "Votre message"}
+        placeholder="Votre message"
+        value={ postMessage }
         label="message"
+        // onChange={handleChange}
         onChange={(e) => setPostMessage(e.target.value)}
       />
       <div>
@@ -94,15 +107,17 @@ export function PostForm({ currentId, setCurrentId }) {
           onChange={(e) => setSelectedFile(e.target.files[0])}
         />
       </div>
-      <button 
-        disabled={!postMessage || isSubmited  ? true : false}
+      <button
+        disabled={!postMessage || isSubmited ? true : false}
         type="submit"
       >
         Envoyer
       </button>
       <button
-       disabled={!postMessage || isSubmited ? true : false}
-       type="reset" onClick={clear}>
+        disabled={!postMessage || isSubmited ? true : false}
+        type="reset"
+        onClick={clear}
+      >
         Annuler
       </button>
     </form>

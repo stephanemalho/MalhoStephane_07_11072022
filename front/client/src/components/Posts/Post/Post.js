@@ -67,7 +67,7 @@ const Post = ({ post, setCurrentId }) => {
     }
   };
 
-  const handleDislike = () => {
+  const handleDislike = ({clear}) => {
     const userId = localStorage.getItem("userId");
     if (userIdDislikes.includes(userId) && !userIdLikes.includes(userId)) {
       setUserIdDislikes(userIdDislikes.filter((id) => id !== userId));
