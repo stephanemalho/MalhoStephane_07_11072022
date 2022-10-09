@@ -67,7 +67,7 @@ const Post = ({ post, setCurrentId }) => {
     }
   };
 
-  const handleDislike = ({clear}) => {
+  const handleDislike = () => {
     const userId = localStorage.getItem("userId");
     if (userIdDislikes.includes(userId) && !userIdLikes.includes(userId)) {
       setUserIdDislikes(userIdDislikes.filter((id) => id !== userId));
@@ -99,8 +99,7 @@ const Post = ({ post, setCurrentId }) => {
 
   const updatePost = () => {
     setCurrentId(post._id);
-    // send post.message to the form when the update button is clicked and the form is displayed
-    console.log(post.message + "    et   " + post.imageUrl);
+    // console.log(post.message + "    et   " + post.imageUrl);
   };
 
   useEffect(() => {

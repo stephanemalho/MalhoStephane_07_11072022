@@ -34,9 +34,8 @@ const Home = () => {
               <h1>Bienvenue sur le réseau social de Groupomania</h1>
               <p>
                 Nous sommes fière de vous acceuillir sur le nouvel outil de
-                partage crée pour vous chères employé(e)s. Découvrez les
-                fonctionnalités mises à votre disposition pour partager vos
-                expériences de travail.
+                partage créé pour vous, chères employé(e)s. Découvrez les
+                fonctionnalités mises à votre disposition pour partager vos publications.
                 <br />
                 Créez un compte et connectez vous pour pouvoir partager vos
                 expériences de travail avec vos collègues.

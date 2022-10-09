@@ -29,7 +29,7 @@ exports.createPost = (req, res, next) => {
   const post = new Post({
     userId: req.auth.userID,
     message : req.body.message,
-    imageUrl: req.file ? `images/image-url/${req.file.filename}` : null,
+    imageUrl: req.file ? `images/image-url/${req.file.filename}` : `images/default-upload/logo.png`,
     likes : 0,
     dislikes : 0,
     usersLikeId : [],
@@ -82,8 +82,12 @@ exports.deletePost = (req, res, next) => {
       const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
       const userId = decodedToken.userId;
       const isAdmin = decodedToken.isAdmin;
+      const defaultFile = "images/default-upload/logo.png";
       if (post.userId !== userId && !isAdmin) {
         return res.status(403).json({ error: "You can't delete this post" }); // forbidden
+      } else if (defaultFile === post.imageUrl) {
+        // dont allow the default image to be deleted
+        return res.status(203).json({ error: "You can't delete the default image" }); // non-authoritative information
       }
       fs.unlink(post.imageUrl, () => {
         Post.deleteOne({ _id: req.params.id })

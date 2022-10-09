@@ -5,7 +5,7 @@ const MIME_TYPES = {
   'image/jpeg': 'jpg',
   'image/png': 'png'
 };
-// Multer configuration
+// Multer configuration config if you need to store an avatar file on the server
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, 'images/avatar'); // set the destination folder for the images

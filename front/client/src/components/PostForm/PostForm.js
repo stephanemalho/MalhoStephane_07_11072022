@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/post";
 import "./form.css";
+import "../../img/logo.png";
 
 export function PostForm({ currentId, setCurrentId }) {
   // état
@@ -9,6 +10,7 @@ export function PostForm({ currentId, setCurrentId }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [successSend, setSuccessSend] = useState(false);
   const [isSubmited, setIsSubmited] = useState(false);
+  
   
 
   const post = useSelector((state) =>
@@ -28,18 +30,16 @@ export function PostForm({ currentId, setCurrentId }) {
     const formData = new FormData();
 
     formData.append("message", postMessage);
-    setPostMessage(postMessage);
+    // setPostMessage(postMessage);
 
     if (selectedFile) {
       formData.append("image", selectedFile);
       setSelectedFile(selectedFile);
     } else {
-      formData.append("image", selectedFile);
-      setSelectedFile(selectedFile);
+      formData.append("image", "default-upload/logo.png");
     }
-   
-    setPostMessage(e.target.value);
-    setSelectedFile(e.target.value);
+    // setPostMessage(e.target.value);
+    //setSelectedFile(e.target.value);
 
     if (currentId) {
       dispatch(updatePost(currentId, formData));
@@ -54,18 +54,6 @@ export function PostForm({ currentId, setCurrentId }) {
       setPostMessage(" ");
     }, 3000);
   };
-
-  // const handleChange = ({currentId}) => {
-  //   if (currentId) {
-  //     console.log("currentId", currentId + "+ " + postMessage);
-   
-  //   } else {
-       
-  //     console.log("currentId", currentId + "+ " + postMessage);
-      
-
-  //   }
-  // }
 
   const clear = () => {
     return (
