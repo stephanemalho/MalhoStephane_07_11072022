@@ -61,7 +61,7 @@ exports.updatePost = (req, res, next) => {
           postObject.message = req.body.message;
         }
         if (postObject.imageUrl) {
-          fs.unlinkSync(post.imageUrl); // delete the old image synchronously
+          fs.unlinkSync(post.imageUrl);
         }
       } catch (error) {
         console.log(error);
@@ -87,14 +87,16 @@ exports.deletePost = (req, res, next) => {
         return res.status(403).json({ error: "You can't delete this post" }); // forbidden
       } else if (defaultFile === post.imageUrl) {
         // dont allow the default image to be deleted
-        return res.status(203).json({ error: "You can't delete the default image" }); // non-authoritative information
-      }
+        Post.deleteOne({ _id: req.params.id })
+        .then(() => res.status(204).send()) // no content
+        .catch((error) => res.status(400).json({ error }));
+      } else {
       fs.unlink(post.imageUrl, () => {
         Post.deleteOne({ _id: req.params.id })
           .then(() => res.status(204).send()) // no content
           .catch((error) => res.status(400).json({ error })); // bad request
         });
-    })
+    }})
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
