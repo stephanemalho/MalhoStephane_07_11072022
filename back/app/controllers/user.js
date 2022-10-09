@@ -4,10 +4,6 @@ const CryptoJS = require("crypto-js");
 const { generateToken } = require("../utils/tokenManager");
 const fs = require("fs");
 
-
-/*****************************************************************
- *****************  ENCRYPT THE USER EMAIL   *********************
- *****************************************************************/
 function encryptString(content) {
   const parsedkey = CryptoJS.enc.Utf8.parse(process.env.PASSPHRASE); // PASSPHRASE in .env exemple folder
   const iv = CryptoJS.enc.Utf8.parse(process.env.IV);
@@ -19,9 +15,6 @@ function encryptString(content) {
   return encrypted.toString();
 }
 
-/*****************************************************************
- *****************  DECRYPT THE USER EMAIL   *********************
- *****************************************************************/
 function decryptString(word) {
   var keys = CryptoJS.enc.Utf8.parse(process.env.PASSPHRASE); // PASSPHRASE in .env exemple folder
   let base64 = CryptoJS.enc.Base64.parse(word);
@@ -33,18 +26,12 @@ function decryptString(word) {
   return decrypt.toString(CryptoJS.enc.Utf8);
 }
 
-/*****************************************************************
- *****************     USER SIGNIN           *********************
- *****************************************************************/
 exports.signup = (req, res, next) => {
   bcrypt
     .hash(req.body.password, 10) // hash the password
     .then((hash) => {
       const emailEncrypted = encryptString(req.body.email); // encryptString the email
-      const firstName = req.body.firstname; // get the firstname
-      const lastName = req.body.lastname; // get the lastname
       const pseudo = req.body.pseudo; // get the pseudo
-      const bio = req.body.bio; // get the bio
       const user = new User({
         // create a new user
         email: emailEncrypted,
@@ -53,9 +40,6 @@ exports.signup = (req, res, next) => {
         avatar: req.file
           ? `images/avatar/${req.file.filename}`
           : "default-upload/avatar.png",
-        bio: bio,
-        firstname: firstName,
-        lastname: lastName,
         hateoasLinks: hateoasLinks(req),
       });
       user
@@ -73,9 +57,6 @@ exports.signup = (req, res, next) => {
     .catch((error) => res.status(500).json({ error })); // Internal Server Error
 };
 
-/*****************************************************************
- *****************     USER LOGING           *********************
- *****************************************************************/
 exports.login = (req, res, next) => {
   const emailEncrypted = encryptString(req.body.email);
   User.findOne({ email: emailEncrypted })
@@ -119,11 +100,8 @@ exports.logout = (req, res, next) => {
   }
 };
 
-/*****************************************************************
- *****************     DELETE THE USER       *********************
- *****************************************************************/
 exports.deleteUser = (req, res, next) => {
-  User.findOne({ _id: req.auth.userID }) // find the sauce
+  User.findOne({ _id: req.auth.userID }) // find the user
     .then((user) => {
       if (!user) {
         return res.status(403).json({ error: "You can't delete this sauce" }); // forbidden
@@ -137,9 +115,6 @@ exports.deleteUser = (req, res, next) => {
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
-/*****************************************************************
- *****************     REPORT THE USER       *********************
- *****************************************************************/
 exports.reportUser = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
@@ -155,7 +130,7 @@ exports.reportUser = (req, res, next) => {
           .then((newUser) => {
             return res
               .status(201)
-              .json(newUser, hateoasLinks(req, newUser._id)); // the report as been created
+              .json(newUser, hateoasLinks(req, newUser._id)); 
           })
           .catch((error) => {
             return res.status(403).json({ error: error }); // forbidden
@@ -167,9 +142,6 @@ exports.reportUser = (req, res, next) => {
     .catch((error) => res.status(500).json({ error })); // Internal Server Error
 };
 
-/*****************************************************************
- *****************  READ THE USER SETUP      *********************
- *****************************************************************/
 exports.readUser = (req, res, next) => {
   User.findOne({ _id: req.auth.userID })
     .then((user) => {
@@ -182,9 +154,6 @@ exports.readUser = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-/*****************************************************************
- *****************  READ ALL THE USERS      *********************
- *****************************************************************/
 exports.readAllUsers = (req, res, next) => {
   User.find()
     .then((users) => {
@@ -212,9 +181,6 @@ exports.updateBio = (req, res, next) => {
     .catch((error) => res.status(500).json({ error })); // Internal Server Error
 };
 
-/*****************************************************************
- *****************  UPDATE THE USER SETUP    *********************
- *****************************************************************/
 exports.updateUser = async (req, res) => {
   const update = {};
   if (req.body.password) {
@@ -268,9 +234,6 @@ exports.updateUser = async (req, res) => {
     .catch((error) => res.status(500).json({ error })); // Internal Server Error
 };
 
-/*****************************************************************
- *****************  EXPORT THE USER DATA     *********************
- *****************************************************************/
 exports.exportData = (req, res) => {
   User.findOne({ _id: req.auth.userID})
     .then((user) => {
@@ -290,9 +253,6 @@ exports.exportData = (req, res) => {
     .catch((error) => res.status(500).json({ error })); // Internal Server Error
 };
 
-/*****************************************************************
- *****************  API RESTFULL USER SETUP  *********************
- *****************************************************************/
 const hateoasLinks = (req, id) => {
   const URI = `${req.protocol}://${req.get("host") + "/api/auth/"}`;
   return [

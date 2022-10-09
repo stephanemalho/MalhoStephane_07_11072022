@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      maxlength: [140, "Message is too long"],
+      maxlength: [300, "Message is too long"],
     },
     imageUrl: {
       type: String,
@@ -37,27 +37,6 @@ const postSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    reports: {
-      type: Number,
-      default: 0,
-    },
-    usersWhoReportedThePost: [
-      {
-        type: String,
-        ref: "User",
-      },
-    ],
-    comment: {
-      type: [
-        {
-          commenterId: String,
-          commenterPseudo: String,
-          text: String,
-          timestamps: { type: Date, default: Date.now },
-        },
-      ],
-      required: true,
-    },
   },
   {
     timestamps: true,

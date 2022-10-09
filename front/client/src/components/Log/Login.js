@@ -1,7 +1,5 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import { Navigate } from "react-router-dom";
-// import Home from "../../pages/Home";
-
 import "./log.css";
 import AuthContext from "../../context/authProvider";
 import logo from "../../img/logo.png";
@@ -34,18 +32,21 @@ const Login = () => {
     try {
       const response = await axios.post(
         LOGIN_URL,
-        JSON.stringify({ email , password: pwd }),
+        JSON.stringify({ email , password: pwd}),
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response.data.userId));
-      console.log(response.data.token);
+      // console.log(JSON.stringify(response.data.userId));
+      // console.log(response.data.token);
+      // console.log("user " + response.data.User.pseudo);
       const token = response.data.token;
-      const userId = JSON.stringify(response.data.userId);
+      const userId = response.data.userId;
+
       localStorage.setItem("token", token.token);
       localStorage.setItem("userId", userId);
+      localStorage.setItem("pseudo", response.data.User.pseudo);
       setAuth({email, pwd, token});
       setEmail("");
       setPwd("");

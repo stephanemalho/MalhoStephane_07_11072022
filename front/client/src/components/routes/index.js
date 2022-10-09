@@ -3,9 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Home from '../../pages/Home';
 import Login from '../../components/Log/Login';
 import Register from '../../components/Log/Register';
-import Trending from '../../pages/Trending';
-import Profil from '../../pages/Profil';
 import Header from '../Header/Header';
+
 
 const index = () => {
   return (
@@ -17,9 +16,9 @@ const index = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/trending" element={<Trending />} />
-        <Route path="/profil" element={<Profil />} />
-        <Route path="*" element={<Navigate to="/" />} />{" "}
+        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/logout" element={<Navigate to="/" />} />
+        {" "}
         {/* <Navigate to='/' /> to replace Redirect */}
       </Routes>
     </Router>

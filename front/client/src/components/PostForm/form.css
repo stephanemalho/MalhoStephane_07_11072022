@@ -7,9 +7,10 @@
   max-width: 500px;
   padding: 2em;
   background-color: white;
+  overflow: hidden;
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 600px) {
   .PostFormDisplay {
     padding: 0;
     background-color: rgba(255,255,255,0.5);
@@ -20,7 +21,7 @@
 
 }
 
-@media screen and (min-width: 500px) and (max-width: 700px) {
+@media screen and (min-width: 500px) and (max-width: 600px) {
   .PostFormDisplay {
     width: 100%;
     max-width: 700px;

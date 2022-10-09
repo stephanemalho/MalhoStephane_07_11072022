@@ -2,12 +2,6 @@ const Post = require("../models/post"); // import the post model
 const fs = require("fs"); // file system
 const jwt = require("jsonwebtoken");
 
-
-
-
-/*****************************************************************
- *****************  READ POST BY ITS ID     *********************
- *****************************************************************/
 exports.readPost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }) // find the post
     .then((post) => {
@@ -17,9 +11,6 @@ exports.readPost = (req, res, next) => {
     .catch((error) => res.status(404).json({ error })); // not found
 };
 
-/*****************************************************************
- *****************  READ ALL THE POSTS      *********************
- *****************************************************************/
 exports.readAllPosts = (req, res, next) => {
   Post.find()
     .then((posts) => {
@@ -34,19 +25,15 @@ exports.readAllPosts = (req, res, next) => {
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
-/*****************************************************************
- *****************  CREATE ONE POST         **********************
- *****************************************************************/
 exports.createPost = (req, res, next) => {
   const post = new Post({
     userId: req.auth.userID,
     message : req.body.message,
-    imageUrl: req.file ? `images/image-url/${req.file.filename}` : null,
+    imageUrl: req.file ? `images/image-url/${req.file.filename}` : `images/default-upload/logo.png`,
     likes : 0,
     dislikes : 0,
     usersLikeId : [],
     usersDislikeId : [],
-    comment : [],
   }); // create a new post
   post
     .save() // save the post
@@ -54,15 +41,12 @@ exports.createPost = (req, res, next) => {
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
-/*****************************************************************
- *****************  UPDATE ELEMENT IN POST       *****************
- *****************************************************************/
 exports.updatePost = (req, res, next) => {
   const postObject = req.file
     ? {
         imageUrl: `images/image-url/${req.file.filename}`,
       }
-    : { ...req.body }; // if there is a file, add the image url to the sauce object
+    : { ...req.body }; // if there is a file, add the image url to the post object
   Post.findOne({ _id: req.params.id })
     .then((post) => {
       const token = req.headers?.authorization.split(" ")[1];
@@ -77,12 +61,12 @@ exports.updatePost = (req, res, next) => {
           postObject.message = req.body.message;
         }
         if (postObject.imageUrl) {
-          fs.unlinkSync(post.imageUrl); // delete the old image synchronously
+          fs.unlinkSync(post.imageUrl);
         }
       } catch (error) {
         console.log(error);
       }
-      Post.findByIdAndUpdate({ _id: req.params.id }, postObject, { new: true })
+      Post.findByIdAndUpdate({ _id: req.params.id }, postObject , { new: true })
         .then((post) =>
           res.status(200).json(post, hateoasLinks(req, post._id))
         ) // ok
@@ -91,11 +75,6 @@ exports.updatePost = (req, res, next) => {
     .catch((error) => res.status(404).json({ error })); // not found
 }
 
-
-
-/*****************************************************************
- *****************  DELETE THE POST          *********************
- *****************************************************************/
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }) // find the post
     .then((post) => {
@@ -103,24 +82,24 @@ exports.deletePost = (req, res, next) => {
       const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
       const userId = decodedToken.userId;
       const isAdmin = decodedToken.isAdmin;
+      const defaultFile = "images/default-upload/logo.png";
       if (post.userId !== userId && !isAdmin) {
         return res.status(403).json({ error: "You can't delete this post" }); // forbidden
-      }
+      } else if (defaultFile === post.imageUrl) {
+        // dont allow the default image to be deleted
+        Post.deleteOne({ _id: req.params.id })
+        .then(() => res.status(204).send()) // no content
+        .catch((error) => res.status(400).json({ error }));
+      } else {
       fs.unlink(post.imageUrl, () => {
         Post.deleteOne({ _id: req.params.id })
           .then(() => res.status(204).send()) // no content
           .catch((error) => res.status(400).json({ error })); // bad request
         });
-    })
+    }})
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
-/*****************************************************************
- *****************  LIKE OR DISLIKE A POST     *******************
- *****************  AND SEND THE USER ID       *******************
- *****************  OF THE LIKER OR DISLIKER   *******************
- *****************  TO THE LIKED USER DB       *******************
- *****************************************************************/
 exports.likePost = (req, res, next) => {
   try {
     Post.findById(req.params.id).then((post) => {
@@ -233,9 +212,6 @@ exports.likePost = (req, res, next) => {
   }
 };
 
-/*****************************************************************
- *****************  REPORT THE POST          *********************
- *****************************************************************/
 exports.reportPost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {

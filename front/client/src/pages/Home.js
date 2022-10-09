@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-
-import "./pages.css";
 import "./home.css";
 import "../components/Posts/Post/post.css";
 import Posts from "../components/Posts/Posts";
+import Header from "../components/Header/Header";
 import {
   faComments,
   faPaperPlane,
@@ -14,10 +13,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Home = () => {
   // état
   const [isConnected, setIsConnected] = useState(false);
+  const currentUser = localStorage.getItem("pseudo");
   
 
   // comportement
-  // check if user is connected if yes setIsConnected to true
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setIsConnected(true);
@@ -34,12 +33,11 @@ const Home = () => {
             <article className="displayDescriptionOfTheSite">
               <h1>Bienvenue sur le réseau social de Groupomania</h1>
               <p>
-                Nous sommes fière de vous acceuillir sur le nouvel outil de
-                partage crée pour vous chères employé(e)s. Découvrez les
-                fonctionnalités mises à votre disposition pour partager vos
-                expériences de travail.
+                Nous sommes fières de vous acceuillir sur le nouvel outil de
+                partage créé pour vous, chères employé(e)s. Découvrez les
+                fonctionnalités mises à votre disposition pour partager vos publications.
                 <br />
-                Crée un compte et connectez vous pour pouvoir partager vos
+                Créez un compte et connectez vous pour pouvoir partager vos
                 expériences de travail avec vos collègues.
               </p>
             </article>
@@ -48,26 +46,25 @@ const Home = () => {
             <h2>Description des fonctions disponibles sur le réseau</h2>
             <ul className="displayIconsInfo">
               <li className="iconContainer">
-                <FontAwesomeIcon icon={faPaperPlane} />
-                <p>Poster vos messages</p>
-              </li>
-              <li className="iconContainer">
                 <FontAwesomeIcon icon={faComments} />
-                <p>Commenter les posts de vos collègues</p>
+                <p>Liker-Disliker les posts de vos collègues</p>
               </li>
               <li className="iconContainer">
                 <FontAwesomeIcon icon={faImages} />
-                <p>Ajouter une images à votre message</p>
+                <p>Ajouter une image à votre message</p>
+              </li>
+              <li className="iconContainer">
+                <FontAwesomeIcon icon={faPaperPlane} />
+                <p>Poster vos messages</p>
               </li>
             </ul>
           </div>
         </>
       ) : (
         <>
-        <h1>Actualité du groupe</h1>
-        
+          <Header />
+            <h1 className="fontWeightSmallScreen" id="goToTopOnClick">Actualité du groupe pour {currentUser}</h1>
           <Posts />
-        
         </>
       )}
     </>
