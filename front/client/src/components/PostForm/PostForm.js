@@ -52,6 +52,7 @@ export function PostForm({ currentId, setCurrentId }) {
       setSuccessSend(false);
       setCurrentId(null);
       setPostMessage(" ");
+      setSelectedFile(null);
     }, 3000);
   };
 
