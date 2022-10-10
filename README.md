@@ -14,20 +14,21 @@ git clone https://github.com/stephanemalho/MalhoStephane_7_11072022.git
 ```bash
   npm install
 ```
-
->### How to run the server
+>>### How to install the back-end ?
 
 >## 📡 Configuration API (back-end)
->>### How to install the back-end ?
+
 >
 
 To run the server, you need to install the packages and dependencies:
-
-```bash
+```
+>### How to run the server
+bash
+  cd back
   npm start
 ```
-
 The server will run on port 3000.
+
 
 >## 🖥 Front-end configuration (React) 
 ```
