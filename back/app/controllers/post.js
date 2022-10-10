@@ -15,8 +15,7 @@ exports.readAllPosts = (req, res, next) => {
   Post.find()
     .then((posts) => {
       posts = posts.map((post) => {
-        post.imageUrl =
-          `${req.protocol}://${req.get("host")}/` + post.imageUrl; // add image url
+        post.imageUrl = `${req.protocol}://${req.get("host")}/` + post.imageUrl; // add image url
         const hateoasLink = hateoasLinks(req, post._id);
         return { ...post._doc, hateoasLink };
       });
@@ -28,12 +27,14 @@ exports.readAllPosts = (req, res, next) => {
 exports.createPost = (req, res, next) => {
   const post = new Post({
     userId: req.auth.userID,
-    message : req.body.message,
-    imageUrl: req.file ? `images/image-url/${req.file.filename}` : `images/default-upload/logo.png`,
-    likes : 0,
-    dislikes : 0,
-    usersLikeId : [],
-    usersDislikeId : [],
+    message: req.body.message,
+    imageUrl: req.file
+      ? `images/image-url/${req.file.filename}`
+      : `images/default-upload/logo.png`,
+    likes: 0,
+    dislikes: 0,
+    usersLikeId: [],
+    usersDislikeId: [],
   }); // create a new post
   post
     .save() // save the post
@@ -53,27 +54,32 @@ exports.updatePost = (req, res, next) => {
       const decodedToken = jwt.verify(token, process.env.JWT_TOKEN);
       const userId = decodedToken.userId;
       const isAdmin = decodedToken.isAdmin;
+      const defaultFile = "images/default-upload/logo.png";
       if (post.userId !== userId && !isAdmin) {
         return res.status(403).json({ error: "You can't update this post" }); // forbidden
       }
       try {
         if (req.body.message) {
           postObject.message = req.body.message;
-        }
-        if (postObject.imageUrl) {
-          fs.unlinkSync(post.imageUrl);
+        } 
+        if (req.file) {
+          if (defaultFile === post.imageUrl) {
+            postObject.imageUrl = `images/image-url/${req.file.filename}`;
+          } else {
+            fs.unlink(post.imageUrl, () => {
+              postObject.imageUrl = `images/image-url/${req.file.filename}`;
+            });
+          }
         }
       } catch (error) {
         console.log(error);
       }
-      Post.findByIdAndUpdate({ _id: req.params.id }, postObject , { new: true })
-        .then((post) =>
-          res.status(200).json(post, hateoasLinks(req, post._id))
-        ) // ok
+      Post.findByIdAndUpdate({ _id: req.params.id }, postObject, { new: true })
+        .then((post) => res.status(200).json(post, hateoasLinks(req, post._id))) // ok
         .catch((error) => res.status(400).json({ error })); // bad request
     })
     .catch((error) => res.status(404).json({ error })); // not found
-}
+};
 
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id }) // find the post
@@ -88,15 +94,16 @@ exports.deletePost = (req, res, next) => {
       } else if (defaultFile === post.imageUrl) {
         // dont allow the default image to be deleted
         Post.deleteOne({ _id: req.params.id })
-        .then(() => res.status(204).send()) // no content
-        .catch((error) => res.status(400).json({ error }));
-      } else {
-      fs.unlink(post.imageUrl, () => {
-        Post.deleteOne({ _id: req.params.id })
           .then(() => res.status(204).send()) // no content
-          .catch((error) => res.status(400).json({ error })); // bad request
+          .catch((error) => res.status(400).json({ error }));
+      } else {
+        fs.unlink(post.imageUrl, () => {
+          Post.deleteOne({ _id: req.params.id })
+            .then(() => res.status(204).send()) // no content
+            .catch((error) => res.status(400).json({ error })); // bad request
         });
-    }})
+      }
+    })
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 

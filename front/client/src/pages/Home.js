@@ -3,6 +3,7 @@ import "./home.css";
 import "../components/Posts/Post/post.css";
 import Posts from "../components/Posts/Posts";
 import Header from "../components/Header/Header";
+
 import {
   faComments,
   faPaperPlane,
@@ -29,6 +30,7 @@ const Home = () => {
     <>
       {!isConnected ? (
         <>
+          <Header />
           <div className="welcomeMessage">
             <article className="displayDescriptionOfTheSite">
               <h1>Bienvenue sur le réseau social de Groupomania</h1>
