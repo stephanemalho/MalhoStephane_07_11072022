@@ -5,6 +5,7 @@ import AuthContext from "../../context/authProvider";
 import logo from "../../img/logo.png";
 import axios from "../../api/axios";
 import Register from "./Register";
+import Header from "../Header/Header";
 const LOGIN_URL = "/api/auth/login";
 
 const Login = () => {
@@ -73,6 +74,7 @@ const Login = () => {
 
   return (
     <>
+      <Header />
       {successMsg ? (
         <Navigate to="/home" />
       ) : registerPage ? <Register /> : (

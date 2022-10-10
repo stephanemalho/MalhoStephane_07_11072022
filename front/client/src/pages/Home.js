@@ -28,9 +28,9 @@ const Home = () => {
   // render
   return (
     <>
+      <Header />
       {!isConnected ? (
         <>
-          <Header />
           <div className="welcomeMessage">
             <article className="displayDescriptionOfTheSite">
               <h1>Bienvenue sur le réseau social de Groupomania</h1>
@@ -64,7 +64,6 @@ const Home = () => {
         </>
       ) : (
         <>
-          <Header />
             <h1 className="fontWeightSmallScreen" id="goToTopOnClick">Actualité du groupe pour {currentUser}</h1>
           <Posts />
         </>

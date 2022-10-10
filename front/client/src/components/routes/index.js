@@ -4,7 +4,6 @@ import Home from '../../pages/Home';
 import Login from '../../components/Log/Login';
 import Register from '../../components/Log/Register';
 
-
 const index = () => {
   return (
     <Router>
