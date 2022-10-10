@@ -18,9 +18,6 @@ axios.interceptors.request.use(
 );
 
 const postsUrl = "http://localhost:4000/api/post/";
-// const usersUrl = "http://localhost:4000/api/auth/users";
- //const USER_Url = "http://localhost:4000/api/auth";
-
 
 export const fetchPosts = () => {
   const token = localStorage.getItem("token");
@@ -68,14 +65,5 @@ export const likePost = async (id, updatedPost) => {
     },
   });
 }
-
-// export const fetchUser = async () => {
-//   const res = await axios.get(`${USER_Url}`, {
-//     headers: {
-//       Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     },
-//   });   
-//   console.log(res.data.pseudo);
-//  };
 
 

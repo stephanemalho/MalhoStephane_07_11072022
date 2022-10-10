@@ -15,7 +15,6 @@ const Home = () => {
   // état
   const [isConnected, setIsConnected] = useState(false);
   const currentUser = localStorage.getItem("pseudo");
-  
 
   // comportement
   useEffect(() => {

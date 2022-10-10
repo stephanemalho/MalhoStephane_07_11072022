@@ -1,6 +1,8 @@
 import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE} from '../constants/actionTypes';
 import * as api from "../api/axios";
 
+
+// CRUD actions
 export function getPosts() {
   return async (dispatch) => {
     try {
