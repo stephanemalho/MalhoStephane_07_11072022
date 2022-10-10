@@ -1,14 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import blackLogo from "../../img/black-logo.png";
 import "./Header.css";
 import {
   faRightToBracket,
   faRightFromBracket,
-
-} 
-from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   // check if token is present in local storage if yes display logout button and hide login and register button
@@ -16,44 +14,65 @@ const Header = () => {
 
   const [isToken, setIsToken] = useState(false);
 
- useState(() => {
+  useEffect(() => {
     if (token) {
       setIsToken(true);
     } else {
       setIsToken(false);
     }
- }, [token]);
+  }, [token]);
 
   return (
     <header>
       <div className="logo">
         <NavLink to="/">
-          <img title="logo groupomania" aria-label="cliquer sur le logo pour retour a la page d'acceuil" src={blackLogo} alt="logo de groupomania" />
+          <img
+            title="logo groupomania"
+            aria-label="cliquer sur le logo pour retour a la page d'acceuil"
+            src={blackLogo}
+            alt="logo de groupomania"
+          />
         </NavLink>
         <div className="loginIcon">
-          { isToken ? (
+          {isToken ? (
             <ul className="logout">
-              <NavLink onClick={
-                () => {
+              <NavLink
+                onClick={() => {
                   localStorage.clear();
                   window.location.reload();
-                }
-              } to="/">
-              <li className="HideInSmallScreen">Se déconnecter</li>
-              <li className="IconSmallHeaderLogOut"><FontAwesomeIcon title="Se déconnecter" icon={faRightFromBracket} /></li>
+                }}
+                to="/"
+              >
+                <li className="HideInSmallScreen">Se déconnecter</li>
+                <li className="IconSmallHeaderLogOut">
+                  <FontAwesomeIcon
+                    title="Se déconnecter"
+                    icon={faRightFromBracket}
+                  />
+                </li>
               </NavLink>
             </ul>
           ) : (
             <ul className="Login">
-            <NavLink to="/register">
-              <li className="HideInSmallScreen">S'inscrire</li>
-              <li className="IconSmallHeader"><FontAwesomeIcon title="S'inscrire"  icon={faRightFromBracket} /></li>
-            </NavLink>
-            <NavLink to="/login">
-              <li className="HideInSmallScreen">Se connecter</li>
-              <li  className="IconSmallHeader"><FontAwesomeIcon title="Se connecter" icon={faRightToBracket} /></li>
-            </NavLink>
-          </ul>
+              <NavLink to="/register">
+                <li className="HideInSmallScreen">S'inscrire</li>
+                <li className="IconSmallHeader">
+                  <FontAwesomeIcon
+                    title="S'inscrire"
+                    icon={faRightFromBracket}
+                  />
+                </li>
+              </NavLink>
+              <NavLink to="/login">
+                <li className="HideInSmallScreen">Se connecter</li>
+                <li className="IconSmallHeader">
+                  <FontAwesomeIcon
+                    title="Se connecter"
+                    icon={faRightToBracket}
+                  />
+                </li>
+              </NavLink>
+            </ul>
           )}
         </div>
       </div>

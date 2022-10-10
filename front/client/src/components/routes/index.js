@@ -3,13 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Home from '../../pages/Home';
 import Login from '../../components/Log/Login';
 import Register from '../../components/Log/Register';
-import Header from '../Header/Header';
 
 
 const index = () => {
   return (
     <Router>
-      <Header />
       <Routes>
         {" "}
         {/* <Routes> to replace Switch */}
