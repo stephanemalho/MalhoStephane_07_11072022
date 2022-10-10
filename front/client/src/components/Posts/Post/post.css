@@ -10,7 +10,6 @@
   padding: 8px;
 }
 
-
 .likeButton,
 .deletePostButton,
 .dislikeButton {
@@ -62,6 +61,7 @@ figcaption {
   z-index: 10;
   color: white;
   font-weight: bold;
+  text-shadow: 0 0 1px black;
 }
 
 .messageItems {
