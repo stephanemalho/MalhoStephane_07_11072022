@@ -39,9 +39,7 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      // console.log(JSON.stringify(response.data.userId));
-      // console.log(response.data.token);
-      // console.log("user " + response.data.User.pseudo);
+
       const token = response.data.token;
       const userId = response.data.userId;
 
@@ -54,9 +52,6 @@ const Login = () => {
       setSuccessMsg(true);
       
     } catch (err) {
-      // setErrMsg(err.response.data.error);
-      // console.log(err);
-      // console.log(err.response.data.error);
       if (err.response.data.error) {
         setErrMsg(err.response.data.error);
       }
@@ -84,7 +79,7 @@ const Login = () => {
             <img className="App-logo" src={logo} alt="logo" />
           </article>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Courriel</label>
             <input
               type="email"
               id="email"

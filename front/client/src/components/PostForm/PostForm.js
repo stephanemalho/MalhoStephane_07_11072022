@@ -10,8 +10,6 @@ export function PostForm({ currentId, setCurrentId }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [successSend, setSuccessSend] = useState(false);
   const [isSubmited, setIsSubmited] = useState(false);
-  
-  
 
   const post = useSelector((state) =>
     currentId ? state.posts.find((p) => p._id === currentId) : null
@@ -30,7 +28,6 @@ export function PostForm({ currentId, setCurrentId }) {
     const formData = new FormData();
 
     formData.append("message", postMessage);
-    // setPostMessage(postMessage);
 
     if (selectedFile) {
       formData.append("image", selectedFile);
@@ -38,8 +35,6 @@ export function PostForm({ currentId, setCurrentId }) {
     } else {
       formData.append("image", "default-upload/logo.png");
     }
-    // setPostMessage(e.target.value);
-    //setSelectedFile(e.target.value);
 
     if (currentId) {
       dispatch(updatePost(currentId, formData));
@@ -47,11 +42,13 @@ export function PostForm({ currentId, setCurrentId }) {
       dispatch(createPost(formData));
     }
     setSuccessSend(true);
+    setIsSubmited(true);
     e.target.reset();
     setTimeout(() => {
       setSuccessSend(false);
       setCurrentId(null);
       setPostMessage(" ");
+      setIsSubmited(false);
       setSelectedFile(null);
     }, 3000);
   };
