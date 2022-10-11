@@ -9,6 +9,7 @@ import {
 import {FontAwesomeIcon}  from "@fortawesome/react-fontawesome";
 import axios from "../../api/axios";
 import Login from "./Login";
+import Header from "../Header/Header";
 
 
 const USER_REGEX = /^[a-zA-Z\u00C0-\u017F][a-zA-Z0-9-_\u00C0-\u017F]{3,23}$/;
@@ -113,6 +114,7 @@ const Register = () => {
 
   return (
     <>
+      <Header />
       {successMsg ? (
        <Login />
       ) : (
