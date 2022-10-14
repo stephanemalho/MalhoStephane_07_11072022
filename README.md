@@ -12,25 +12,22 @@ Install Node.js v14.16.0 (or latest version)
 ```bash
 git clone https://github.com/stephanemalho/MalhoStephane_7_11072022.git
 ```
+>## 📡 Configuration API (back-end)
+>>### How to install the back-end ?
+>>To run the server, you need to install the packages and dependencies:
 ### Duplicate .env.example to .env in the Back file and fill required value. Then run :
 
 ```bash
+  cd back
   npm install
 ```
->>### How to install the back-end ?
 
->## 📡 Configuration API (back-end)
-
->
-
-To run the server, you need to install the packages and dependencies:
-```
 >### How to run the server
 bash
   cd back
   npm start
 ```
-The server will run on port 3000.
+The server will run on port 4000.
 
 
 >## 🖥 Front-end configuration (React) 
@@ -39,6 +36,7 @@ The server will run on port 3000.
 
 ```bash
   cd front/client
+  npm install
   npm start
 ```
 
