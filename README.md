@@ -12,7 +12,7 @@ Install Node.js v14.16.0 (or latest version)
 ```bash
 git clone https://github.com/stephanemalho/MalhoStephane_7_11072022.git
 ```
-### Duplicate .env.example to .env and fill required value. Then run :
+### Duplicate .env.example to .env in the Back file and fill required value. Then run :
 
 ```bash
   npm install
