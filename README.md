@@ -1,8 +1,11 @@
-## MalhoStephane_6_25032022
+## MalhoStephane_7_11072022
 
 # 🇫🇷 Créez un réseau social d’entreprise
 # 🇬🇧 Create a social network of companies
 
+### REQUIREMENTS
+
+Install Node.js v14.16.0 (or latest version)
 
 ### Clone this repository
 
