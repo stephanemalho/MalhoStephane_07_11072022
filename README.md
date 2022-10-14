@@ -23,7 +23,7 @@ git clone https://github.com/stephanemalho/MalhoStephane_7_11072022.git
 ```
 
 >### How to run the server
-bash
+```bash
   cd back
   npm start
 ```
