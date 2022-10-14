@@ -9,9 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
-  // check if token is present in local storage if yes display logout button and hide login and register button
+  
   const token = localStorage.getItem("token");
-
   const [isToken, setIsToken] = useState(false);
 
   useEffect(() => {

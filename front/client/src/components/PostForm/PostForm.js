@@ -27,6 +27,12 @@ export function PostForm({ currentId, setCurrentId }) {
     e.preventDefault();
     const formData = new FormData();
 
+    // check if postMessage is more then 300 characters if so, we don't send the post
+    if (postMessage.length > 300) {
+      alert("Le message ne doit pas dépasser 300 caractères");
+      return;
+    }
+
     formData.append("message", postMessage);
 
     if (selectedFile) {

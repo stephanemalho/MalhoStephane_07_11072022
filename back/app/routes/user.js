@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 const { body } = require("express-validator");
 const validationResultExpress = require("../middleware/validationAuth");
 const controlPassword = require("../middleware/control-password-user");
-const multer = require('../middleware/multer-avatar'); // multer configuration
+const multer = require('../middleware/multer-config'); // multer configuration
 
 
 // create routes for users
@@ -37,6 +37,5 @@ router.put("/",auth, multer, [
 validationResultExpress, controlPassword, userCtrl.updateUser); // update a user account
 router.post("/:id/report", auth, userCtrl.reportUser); // report the user
 router.get("/export-data", auth, userCtrl.exportData); // export the user')
-router.post("/bio", auth, userCtrl.updateBio); // update the user bio")
 
 module.exports = router;

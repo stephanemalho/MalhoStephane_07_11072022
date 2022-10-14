@@ -166,21 +166,6 @@ exports.readAllUsers = (req, res, next) => {
     .catch((error) => res.status(400).json({ error })); // bad request
 };
 
-exports.updateBio = (req, res, next) => {
-  User.findByIdAndUpdate(
-    { _id: req.auth.userID },
-    { bio: req.body.bio },
-    { new: true }
-  )
-    .then((user) => {
-      if (!user) {
-        res.status(404).send("User not found"); // not found
-      }
-      res.status(200).json(user, hateoasLinks(req, user._id)); // OK
-    })
-    .catch((error) => res.status(500).json({ error })); // Internal Server Error
-};
-
 exports.updateUser = async (req, res) => {
   const update = {};
   if (req.body.password) {
