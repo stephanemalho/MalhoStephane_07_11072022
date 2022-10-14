@@ -50,19 +50,16 @@ const Register = () => {
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
-    // console.log(email);
     setValidEmail(result);
   }, [email]);
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    // console.log(user);
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    // console.log(pwd);
     setValidPwd(result);
     const match = pwd === matchPwd;
     setValidMatchPwd(match);
@@ -88,8 +85,7 @@ const Register = () => {
         email,
         password: pwd,
       });
-      console.log(response);
-      console.log(JSON.stringify(response));
+      console.log(response.data.user);
       setSuccessMsg(true);
     }
     catch (err) {
