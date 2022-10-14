@@ -18,13 +18,13 @@ git clone https://github.com/stephanemalho/MalhoStephane_7_11072022.git
 ### Duplicate .env.example to .env in the Back file and fill required value. Then run :
 
 ```bash
-  cd back
+  cd back // only if you are not already positioned in the back named file
   npm install
 ```
 
 >### How to run the server
 ```bash
-  cd back
+  cd back // if you are not already positioned in the back named file
   npm start
 ```
 The server will run on port 4000.
@@ -35,7 +35,8 @@ The server will run on port 4000.
 >### How to run the front-end
 
 ```bash
-  cd front/client
+  cd .. // only if you are positioned in the back file
+  cd front/client // only if you are not already positioned in the client file and not in the back file
   npm install
   npm start
 ```
