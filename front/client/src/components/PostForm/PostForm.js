@@ -100,13 +100,13 @@ export function PostForm({ currentId, setCurrentId }) {
         />
       </div>
       <button
-        disabled={!postMessage || isSubmited ? true : false}
+        disabled={ postMessage === " " || isSubmited ? true : false}
         type="submit"
       >
         Envoyer
       </button>
       <button
-        disabled={!postMessage || isSubmited ? true : false}
+        disabled={postMessage === " " || isSubmited ? true : false}
         type="reset"
         onClick={clear}
       >
